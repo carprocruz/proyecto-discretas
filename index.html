@@ -3,10 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nodo & Arista — Teoría de Grafos interactiva</title>
+<title>La GrafoNal | Teoria de grafos interactiva</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$']]
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -14,11 +26,10 @@
 <nav>
   <div class="navrow">
     <div class="brand">
-      <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="5" cy="6" r="4" fill="#ff6b5b"/><circle cx="21" cy="5" r="4" fill="#ffbe4d"/><circle cx="6" cy="21" r="4" fill="#4fd6ca"/><circle cx="20" cy="20" r="4" fill="#a293ff"/><line x1="5" y1="6" x2="21" y2="5" stroke="#39415580" stroke-width="2"/><line x1="5" y1="6" x2="6" y2="21" stroke="#39415580" stroke-width="2"/><line x1="21" y1="5" x2="20" y2="20" stroke="#39415580" stroke-width="2"/></svg>
-      Nodo &amp; Arista
+      <img class="brand-mark" src="public/logo-la-grafonal-cutout.png" alt="Logo de La GrafoNal">
     </div>
     <div class="navlinks">
-      <a href="#teoria">Teoría</a>
+      <a href="#teoria">Teoria</a>
       <a href="#laboratorio">Laboratorio</a>
       <a href="#retos">Retos</a>
     </div>
@@ -28,96 +39,175 @@
 <header class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow"><span class="dot"></span> Matemáticas discretas · Teoría de grafos</div>
-      <h1>Los grafos no se memorizan, <em>se construyen.</em></h1>
-      <p class="lead">Una manera visual de aprender vértices, aristas, recorridos y coloreo: dibuja tu propio grafo, míralo pensar paso a paso y pon a prueba lo que entendiste con retos que se verifican sobre lo que tú construiste.</p>
+      <div class="eyebrow"><span class="dot"></span> Matematicas discretas · teoria de grafos</div>
+      <div class="hero-brand-card">
+        <img src="public/logo-la-grafonal-cutout.png" alt="Logo de La GrafoNal">
+        <div class="meta">
+          <span class="kicker">Proyecto de sustentacion</span>
+          <h1>La GrafoNal</h1>
+          <p>Teoria, laboratorio y retos sobre una misma estructura visual.</p>
+        </div>
+      </div>
+      <p class="lead">Una forma de estudiar grafos que combina definiciones, ecuaciones y visualizaciones interactivas. La teoria queda conectada con el laboratorio para que cada concepto se vea, se pruebe y se entienda con rapidez.</p>
       <div class="hero-ctas">
-        <a href="#laboratorio" class="btn primary">Abrir el laboratorio →</a>
-        <a href="#teoria" class="btn">Ver la teoría</a>
+        <a href="#teoria" class="btn primary">Ir a la teoria -></a>
+        <a href="#laboratorio" class="btn">Abrir el laboratorio</a>
       </div>
     </div>
     <div class="hero-canvas-card">
       <canvas id="heroCanvas" width="520" height="360"></canvas>
-      <div class="hero-canvas-cap"><span>grafo aleatorio, en vivo</span><span id="heroCapInfo">n vértices · m aristas</span></div>
+      <div class="hero-canvas-cap"><span>grafo aleatorio, en vivo</span><span id="heroCapInfo">n vertices · m aristas</span></div>
     </div>
   </div>
 </header>
 
-<!-- ================= TEORÍA ================= -->
-<section class="section" id="teoria">
+<!-- ================= TEORIA ================= -->
+<section class="section section-theory" id="teoria">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow"><span class="dot"></span> 01 · Fundamentos</div>
-      <h2>La teoría, sin el tablero</h2>
-      <p>Seis bloques que cubren lo esencial del curso. Ábrelos, léelos en dos minutos y pruébalos enseguida en el laboratorio.</p>
+      <h2>La teoria, con notacion clara y ecuaciones visibles</h2>
+      <p>Los contenidos del capitulo de grafos y arboles estan reorganizados para que las definiciones se lean mejor y las expresiones matematicas aparezcan como bloques, no como texto plano.</p>
     </div>
 
-    <div class="theory-tabs">
-      <button class="tt-btn active" data-t="def">Definiciones</button>
-      <button class="tt-btn" data-t="rep">Representación</button>
-      <button class="tt-btn" data-t="prop">Propiedades</button>
-      <button class="tt-btn" data-t="tipos">Tipos especiales</button>
-      <button class="tt-btn" data-t="algo">Algoritmos</button>
-      <button class="tt-btn" data-t="comp">Aspectos computacionales</button>
+    <div class="theory-note theory-note--wide">
+      <strong>Notacion base:</strong> trabajamos con $G=(V,E)$, con $\vert V\vert = n$ y $\vert E\vert = m$. Las ideas de adyacencia, grado, caminos y coloracion se escriben con la misma simbologia en toda la seccion.
     </div>
 
-    <div class="theory-panel active" id="panel-def">
-      <div class="concept-grid">
-        <details class="concept" open><summary>Grafo</summary><p>Un grafo <code>G = (V, E)</code> es un conjunto de <strong>vértices</strong> V (los puntos) junto con un conjunto de <strong>aristas</strong> E (las conexiones entre pares de vértices). Es la estructura que usamos para modelar cualquier cosa que se pueda pensar como "elementos y relaciones entre ellos": personas y amistades, ciudades y carreteras, tareas y dependencias.</p><span class="tag">V, E</span></details>
-        <details class="concept"><summary>Vértices y aristas</summary><p>Los <strong>vértices</strong> (o nodos) son las entidades. Las <strong>aristas</strong> son los enlaces entre dos vértices. Una arista puede tener peso (costo, distancia) o ser simple (solo indica que existe conexión).</p></details>
-        <details class="concept"><summary>Grafos dirigidos vs. no dirigidos</summary><p>En un grafo <strong>no dirigido</strong> la arista {A, B} se recorre en ambos sentidos. En uno <strong>dirigido</strong>, la arista (A, B) solo va de A hacia B — como una calle de un solo sentido. En el laboratorio puedes alternar entre ambos con un interruptor.</p></details>
-      </div>
-    </div>
+    <div class="theory-stack">
+      <details class="theory-section" open>
+        <summary>Definiciones</summary>
+        <div class="theory-section-body">
+          <article class="theory-item">
+            <h4>Grafo</h4>
+            <p>Un grafo se describe como un par ordenado $G=(V,E)$, donde $V$ es el conjunto de vertices y $E$ es el conjunto de aristas que unen pares de vertices.</p>
+            <div class="formula-block">$$G=(V,E)$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Digrafo</h4>
+            <p>Cuando cada arista tiene orientacion, el objeto se interpreta como un digrafo. En ese caso, las aristas se leen como pares ordenados y se distingue el sentido de recorrido.</p>
+            <div class="formula-block">$$e=(u,v)$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Subgrafo</h4>
+            <p>Si un grafo conserva solo una parte de sus vertices y aristas, obtenemos un subgrafo. Formalmente, $H=(W,F)$ con $W\subseteq V$ y $F\subseteq E$.</p>
+            <div class="formula-block">$$H=(W,F),\qquad W\subseteq V,\;F\subseteq E$$</div>
+          </article>
+        </div>
+      </details>
 
-    <div class="theory-panel" id="panel-rep">
-      <div class="concept-grid">
-        <details class="concept" open><summary>Lista de adyacencia</summary><p>Para cada vértice se guarda la lista de vértices a los que está conectado. Es compacta y eficiente cuando el grafo tiene pocas aristas en relación con sus vértices (grafo disperso).</p><span class="tag">A: [B, C]</span></details>
-        <details class="concept"><summary>Matriz de adyacencia</summary><p>Una tabla n×n donde la celda (i, j) vale 1 si existe arista entre el vértice i y el vértice j, y 0 si no. Es simétrica en grafos no dirigidos. El laboratorio la genera automáticamente a partir de tu grafo.</p></details>
-        <details class="concept"><summary>Matriz de incidencia</summary><p>Una tabla de vértices × aristas donde la celda marca si un vértice es extremo de esa arista. Es útil para trabajar con multigrafos o para álgebra lineal aplicada a grafos.</p></details>
-      </div>
-    </div>
+      <details class="theory-section">
+        <summary>Representacion</summary>
+        <div class="theory-section-body">
+          <article class="theory-item">
+            <h4>Lista de adyacencia</h4>
+            <p>Para cada vertice se guarda la lista de vertices con los que comparte una arista. Es una representacion compacta y muy util cuando el grafo es disperso.</p>
+            <p class="inline-sample">A: [B, C]</p>
+          </article>
+          <article class="theory-item">
+            <h4>Matriz de adyacencia</h4>
+            <p>La informacion se organiza en una tabla cuadrada donde la entrada $(i,j)$ indica si existe o no una arista entre esos vertices.</p>
+            <div class="formula-block">$$a_{ij}=\begin{cases}1,& \text{si }(v_i,v_j)\in E\\0,& \text{si no}\end{cases}$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Matriz de incidencia</h4>
+            <p>Relaciona vertices con aristas y marca cuando un vertice es extremo de una arista. Es especialmente util para seguir la estructura del grafo sin perder las conexiones individuales.</p>
+            <div class="formula-block">$$b_{ij}$$</div>
+          </article>
+        </div>
+      </details>
 
-    <div class="theory-panel" id="panel-prop">
-      <div class="concept-grid">
-        <details class="concept" open><summary>Grado de un vértice</summary><p>El número de aristas que llegan o salen de un vértice. En grafos dirigidos se distingue entre grado de entrada y grado de salida. El laboratorio te muestra el grado de cada vértice en tiempo real.</p></details>
-        <details class="concept"><summary>Camino</summary><p>Una secuencia de vértices donde cada par consecutivo está unido por una arista, sin repetir vértices. Un <strong>ciclo</strong> es un camino que vuelve a su vértice inicial.</p></details>
-        <details class="concept"><summary>Conectividad y componentes conexas</summary><p>Un grafo es <strong>conexo</strong> si existe un camino entre cualquier par de vértices. Si no lo es, se divide en <strong>componentes conexas</strong>: subgrafos internamente conectados pero aislados entre sí. Pruébalo en Retos con tu propio grafo.</p></details>
-      </div>
-    </div>
+      <details class="theory-section">
+        <summary>Propiedades</summary>
+        <div class="theory-section-body">
+          <article class="theory-item">
+            <h4>Grado de un vertice</h4>
+            <p>El grado cuenta cuantas aristas inciden en un vertice. En grafos dirigidos se diferencia entre grado de entrada y grado de salida.</p>
+            <div class="formula-block">$$d(v)=\lvert N(v)\rvert$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Camino y ciclo</h4>
+            <p>Un camino es una sucesion de vertices conectados uno tras otro. Si el recorrido regresa al vertice inicial, la secuencia se convierte en un ciclo.</p>
+            <div class="formula-block">$$P=(v_0,v_1,\dots,v_k),\qquad C=(v_0,\dots,v_k,v_0)$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Conectividad</h4>
+            <p>Un grafo es conexo cuando cualquier par de vertices puede enlazarse por un camino. Si no ocurre, el grafo se separa en componentes conexas.</p>
+            <div class="formula-block">$$G\text{ conexo} \iff \forall u,v\in V,\; \exists\;\text{camino entre }u\text{ y }v$$</div>
+          </article>
+        </div>
+      </details>
 
-    <div class="theory-panel" id="panel-tipos">
-      <div class="concept-grid">
-        <details class="concept" open><summary>Árboles</summary><p>Un grafo conexo sin ciclos. Con n vértices, un árbol tiene siempre exactamente n − 1 aristas. Son la base de estructuras jerárquicas: sistemas de archivos, organigramas, árboles de decisión.</p></details>
-        <details class="concept"><summary>Grafos completos</summary><p>Todo par de vértices está conectado. Se denota Kₙ y tiene n(n−1)/2 aristas. Es el grafo con más aristas posibles sin repetir conexiones.</p></details>
-        <details class="concept"><summary>Grafos bipartitos</summary><p>Sus vértices se pueden dividir en dos grupos, de modo que toda arista une un vértice de un grupo con uno del otro grupo — nunca dentro del mismo grupo. Ponlo a prueba: constrúyelo y verifícalo en la sección de Retos.</p></details>
-        <details class="concept"><summary>Grafos planares</summary><p>Se pueden dibujar en un plano sin que ninguna arista cruce a otra. Son la razón por la que un mapa de países puede colorearse con solo cuatro colores sin que dos vecinos compartan color.</p></details>
-      </div>
-    </div>
+      <details class="theory-section">
+        <summary>Grafos especiales</summary>
+        <div class="theory-section-body">
+          <article class="theory-item">
+            <h4>Grafo completo</h4>
+            <p>Todo par de vertices esta unido por una arista. En un grafo completo con <em>n</em> vertices, la cantidad de aristas se obtiene directamente de la combinacion de pares.</p>
+            <div class="formula-block">$$\lvert E\rvert = \frac{n(n-1)}{2}$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Grafo bipartito</h4>
+            <p>Los vertices se dividen en dos conjuntos y toda arista une un vertice de un conjunto con uno del otro. No aparecen aristas dentro del mismo conjunto.</p>
+            <div class="formula-block">$$V=X\cup Y,\qquad X\cap Y=\varnothing$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Grafo planar</h4>
+            <p>Puede dibujarse en el plano sin cruces entre aristas. Esa propiedad permite estudiar caras, regiones y relaciones topologicas del dibujo.</p>
+            <div class="formula-block">$$v-e+f=2$$</div>
+          </article>
+        </div>
+      </details>
 
-    <div class="theory-panel" id="panel-algo">
-      <div class="concept-grid">
-        <details class="concept" open><summary>BFS — recorrido en anchura</summary><p>Explora el grafo por niveles: primero los vecinos directos del vértice inicial, luego los vecinos de esos vecinos, y así sucesivamente, usando una cola (FIFO). Encuentra el camino más corto en número de aristas.</p></details>
-        <details class="concept"><summary>DFS — recorrido en profundidad</summary><p>Avanza tan lejos como puede por una rama antes de retroceder, usando una pila (LIFO) o recursión. Es la base de la detección de ciclos y del cálculo de componentes conexas.</p></details>
-        <details class="concept"><summary>Coloreo de grafos</summary><p>Asignar colores a los vértices de modo que dos vértices conectados nunca compartan color, usando la menor cantidad de colores posible. Esa cantidad mínima es el <strong>número cromático</strong> del grafo.</p></details>
-        <details class="concept"><summary>Número y polinomio cromático</summary><p>El algoritmo voraz (greedy) que verás en el laboratorio da una <em>aproximación por arriba</em> del número cromático real, no siempre el valor exacto. El polinomio cromático P(G, k) cuenta, para cada k, de cuántas formas distintas se puede colorear el grafo con k colores — es una introducción útil para grafos pequeños.</p></details>
-      </div>
-    </div>
+      <details class="theory-section">
+        <summary>Arboles</summary>
+        <div class="theory-section-body">
+          <article class="theory-item">
+            <h4>Arbol</h4>
+            <p>Un arbol es un grafo conexo sin ciclos. Si tiene <em>n</em> vertices, entonces presenta exactamente <em>n-1</em> aristas.</p>
+            <div class="formula-block">$$\lvert E\rvert = \lvert V\rvert - 1$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Bosque</h4>
+            <p>Un bosque es una coleccion de arboles desconectados entre si. Cada componente del bosque es un arbol por separado.</p>
+            <div class="formula-block">$$F=T_1\cup T_2\cup \cdots \cup T_k$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Arbol generador</h4>
+            <p>Si de un grafo conexo se conserva la conectividad usando la menor cantidad posible de aristas, se obtiene un arbol generador o spanning tree.</p>
+          </article>
+        </div>
+      </details>
 
-    <div class="theory-panel" id="panel-comp">
-      <div class="concept-grid">
-        <details class="concept" open><summary>Modelado con estructuras discretas</summary><p>Casi cualquier problema de "elementos + relaciones" se puede traducir a un grafo: rutas de transporte, redes sociales, dependencias entre tareas, circuitos, mapas de estados. El primer paso siempre es decidir qué son los vértices y qué son las aristas.</p></details>
-        <details class="concept"><summary>Implementación de algoritmos</summary><p>Todo lo que ves correr en el laboratorio — BFS, DFS, coloreo — está implementado en JavaScript sobre listas de adyacencia, exactamente como lo escribirías en un curso de estructuras de datos.</p></details>
-      </div>
+      <details class="theory-section">
+        <summary>Coloracion</summary>
+        <div class="theory-section-body">
+          <article class="theory-item">
+            <h4>Coloracion propia</h4>
+            <p>Asignamos colores a los vertices de forma que dos vertices adyacentes nunca compartan color.</p>
+            <div class="formula-block">$$c:V\to\{1,2,\dots,k\}$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Numero cromatico</h4>
+            <p>Es la menor cantidad de colores necesarios para lograr una coloracion propia. Se representa con $\chi(G)$.</p>
+            <div class="formula-block">$$\chi(G)=\min\{k: G \text{ es } k\text{-coloreable}\}$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Coloracion voraz</h4>
+            <p>Recorre los vertices y asigna siempre el primer color disponible. No siempre alcanza el numero cromatico, pero es una forma practica de visualizar el proceso.</p>
+          </article>
+        </div>
+      </details>
     </div>
   </div>
 </section>
 
 <!-- ================= LABORATORIO ================= -->
-<section class="section" id="laboratorio" style="background:var(--ink-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+<section class="section section-lab" id="laboratorio">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow"><span class="dot" style="background:var(--c2)"></span> 02 · Laboratorio</div>
-      <h2>Construye tu grafo, luego míralo pensar</h2>
+      <h2>Construye tu grafo, luego miralo pensar</h2>
       <p>Edita el grafo con el mouse o el dedo. Cambia al modo Algoritmos para correr BFS, DFS, componentes conexas o coloreo sobre lo que construiste.</p>
     </div>
 
@@ -125,54 +215,52 @@
       <div class="lab-card">
         <div class="lab-mode-row">
           <button class="btn small active" id="tabEdit" data-labtab="edit">✏️ Editar grafo</button>
-          <button class="btn small" id="tabAlgo" data-labtab="algo">▶ Algoritmos</button>
+          <button class="btn small" id="tabAlgo" data-labtab="algo">🧠 Algoritmos</button>
         </div>
 
         <div class="lab-canvas-wrap">
           <canvas id="labCanvas" width="900" height="520"></canvas>
         </div>
 
-        <!-- edit toolbar -->
         <div id="editToolbar" class="lab-toolbar">
           <div class="grp">
-            <button class="btn small active" data-mode="move">🖐 Mover</button>
-            <button class="btn small" data-mode="addNode">➕ Vértice</button>
+            <button class="btn small active" data-mode="move">🖐️ Mover</button>
+            <button class="btn small" data-mode="addNode">➕ Vertice</button>
             <button class="btn small" data-mode="connect">🔗 Conectar</button>
-            <button class="btn small" data-mode="delete">🗑 Borrar</button>
+            <button class="btn small" data-mode="delete">🗑️ Borrar</button>
           </div>
           <div class="grp">
             <label class="switch"><input type="checkbox" id="directedToggle"> dirigido</label>
             <button class="btn small" id="randomGraphBtn">🎲 Aleatorio</button>
-            <button class="btn small danger" id="clearGraphBtn">Limpiar</button>
+            <button class="btn small danger" id="clearGraphBtn">🧹 Limpiar</button>
           </div>
         </div>
-        <div class="hint" id="editHint">Modo Mover: arrastra un vértice para reubicarlo. Cambia de modo arriba para añadir vértices, conectar o borrar.</div>
+        <div class="hint" id="editHint">Modo Mover: arrastra un vertice para reubicarlo. Cambia de modo arriba para añadir vertices, conectar o borrar.</div>
 
-        <!-- algo toolbar -->
         <div id="algoToolbar" style="display:none;">
           <div class="algo-controls">
-            <button class="btn small active" data-algo="bfs">BFS</button>
-            <button class="btn small" data-algo="dfs">DFS</button>
-            <button class="btn small" data-algo="comp">Componentes conexas</button>
-            <button class="btn small" data-algo="color">Coloreo voraz</button>
+            <button class="btn small active" data-algo="bfs">📡 BFS</button>
+            <button class="btn small" data-algo="dfs">🧭 DFS</button>
+            <button class="btn small" data-algo="comp">🧩 Componentes conexas</button>
+            <button class="btn small" data-algo="color">🎨 Coloreo voraz</button>
           </div>
           <div class="algo-controls" style="margin-top:10px;">
-            <button class="btn small" id="pickStartBtn">📍 Elegir vértice inicial</button>
-            <button class="btn small primary" id="runAlgoBtn">▶ Ejecutar</button>
-            <button class="btn small" id="playPauseBtn">⏯ Pausar/Reanudar</button>
-            <button class="btn small" id="stepBtn">⏭ Paso</button>
-            <button class="btn small" id="resetAlgoBtn">↺ Reiniciar</button>
+            <button class="btn small" id="pickStartBtn">🎯 Elegir vertice inicial</button>
+            <button class="btn small primary" id="runAlgoBtn">Ejecutar</button>
+            <button class="btn small" id="playPauseBtn">Pausar/Reanudar</button>
+            <button class="btn small" id="stepBtn">Paso</button>
+            <button class="btn small" id="resetAlgoBtn">Reiniciar</button>
           </div>
           <div class="speed-row">velocidad <input type="range" id="speedRange" min="150" max="1600" value="700"> <span id="speedVal">700ms</span></div>
-          <div class="log-box" id="logBox"><div>Elige un algoritmo y pulsa «Ejecutar». Para BFS/DFS primero define un vértice inicial.</div></div>
+          <div class="log-box" id="logBox"><div>Elige un algoritmo y pulsa "Ejecutar". Para BFS/DFS primero define un vertice inicial.</div></div>
         </div>
       </div>
 
       <div>
         <div class="stat-row">
-          <div class="stat"><div class="stat-label">Vértices</div><div class="stat-value" id="statN">0</div></div>
+          <div class="stat"><div class="stat-label">Vertices</div><div class="stat-value" id="statN">0</div></div>
           <div class="stat"><div class="stat-label">Aristas</div><div class="stat-value" id="statM">0</div></div>
-          <div class="stat"><div class="stat-label">¿Conexo?</div><div class="stat-value" id="statConn">—</div></div>
+          <div class="stat"><div class="stat-label">Conexo?</div><div class="stat-value" id="statConn">-</div></div>
           <div class="stat"><div class="stat-label">Tipo</div><div class="stat-value" id="statType" style="font-size:14px;">no dirigido</div></div>
         </div>
 
@@ -182,9 +270,9 @@
             <button data-panel="matrix">Matriz de adyacencia</button>
             <button data-panel="degree">Grados</button>
           </div>
-          <div class="data-panel active" id="panelList"><div class="adj-list" id="adjListBody">—</div></div>
-          <div class="data-panel" id="panelMatrix"><div style="overflow:auto;" id="matrixBody">—</div></div>
-          <div class="data-panel" id="panelDegree"><div class="adj-list" id="degreeBody">—</div></div>
+          <div class="data-panel active" id="panelList"><div class="adj-list" id="adjListBody">-</div></div>
+          <div class="data-panel" id="panelMatrix"><div style="overflow:auto;" id="matrixBody">-</div></div>
+          <div class="data-panel" id="panelDegree"><div class="adj-list" id="degreeBody">-</div></div>
         </div>
       </div>
     </div>
@@ -192,16 +280,16 @@
 </section>
 
 <!-- ================= RETOS ================= -->
-<section class="section" id="retos">
+<section class="section section-retos" id="retos">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow"><span class="dot" style="background:var(--c1)"></span> 03 · Retos</div>
       <h2>Demuestra que entendiste</h2>
-      <p>Un cuestionario corto y dos retos prácticos que se verifican directamente sobre el grafo que construiste en el laboratorio.</p>
+      <p>Un cuestionario corto y dos retos practicos que se verifican directamente sobre el grafo que construiste en el laboratorio.</p>
     </div>
 
     <div class="score-bar">
-      <span>Cuestionario rápido</span>
+      <span>Cuestionario rapido</span>
       <span class="num" id="quizScore">0 / 6</span>
     </div>
     <div id="quizContainer"></div>
@@ -209,23 +297,23 @@
 
     <div class="challenge-grid">
       <div class="challenge-card">
-        <h4>Reto 1 — Construye un grafo bipartito</h4>
-        <p style="color:var(--text-dim); font-size:14px;">Ve al laboratorio, borra el grafo actual y construye uno que creas que es bipartito (mínimo 4 vértices). Vuelve aquí y verifica.</p>
-        <button class="btn small" id="checkBipartiteBtn">Verificar bipartición</button>
-        <div class="result-box" id="bipartiteResult">Esperando verificación…</div>
+        <h4>Reto 1 - Construye un grafo bipartito</h4>
+        <p style="color:var(--text-dim); font-size:14px;">Ve al laboratorio, borra el grafo actual y construye uno que creas que es bipartito (minimo 4 vertices). Vuelve aqui y verifica.</p>
+        <button class="btn small" id="checkBipartiteBtn">Verificar biparticion</button>
+        <div class="result-box" id="bipartiteResult">Esperando verificacion...</div>
       </div>
       <div class="challenge-card">
-        <h4>Reto 2 — ¿Tu grafo es conexo?</h4>
-        <p style="color:var(--text-dim); font-size:14px;">Usa el grafo que tengas actualmente en el laboratorio (puede ser cualquiera) y verifica cuántas componentes conexas tiene.</p>
+        <h4>Reto 2 - Tu grafo es conexo?</h4>
+        <p style="color:var(--text-dim); font-size:14px;">Usa el grafo que tengas actualmente en el laboratorio (puede ser cualquiera) y verifica cuantas componentes conexas tiene.</p>
         <button class="btn small" id="checkConnectedBtn">Verificar conectividad</button>
-        <div class="result-box" id="connectedResult">Esperando verificación…</div>
+        <div class="result-box" id="connectedResult">Esperando verificacion...</div>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  Proyecto de Teoría de Grafos · Matemáticas Discretas — construido para aprender jugando con nodos y aristas.
+  La GrafoNal - Teoria de Grafos interactiva para aprender jugando con nodos, aristas, ecuaciones y retos.
 </footer>
 
 <script src="js/script.js"></script>

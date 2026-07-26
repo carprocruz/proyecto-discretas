@@ -63,57 +63,59 @@ function connectedComponents(){
    HERO CANVAS — grafo aleatorio ambiental
    ============================================================ */
 const heroCanvas = document.getElementById('heroCanvas');
-const hctx = heroCanvas.getContext('2d');
-let heroNodes = [], heroEdges = [];
-function genHero(){
-  heroNodes = []; heroEdges = [];
-  const n = 8 + Math.floor(Math.random()*4);
-  for(let i=0;i<n;i++){
-    heroNodes.push({
-      x: 40+Math.random()*(heroCanvas.width-80),
-      y: 40+Math.random()*(heroCanvas.height-80),
-      vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25,
-      c: PALETTE[i%4]
-    });
-  }
-  for(let i=0;i<n;i++){
-    const links = 1+Math.floor(Math.random()*2);
-    for(let k=0;k<links;k++){
-      const j = Math.floor(Math.random()*n);
-      if(j!==i) heroEdges.push([i,j]);
+if(heroCanvas){
+  const hctx = heroCanvas.getContext('2d');
+  let heroNodes = [], heroEdges = [];
+  function genHero(){
+    heroNodes = []; heroEdges = [];
+    const n = 8 + Math.floor(Math.random()*4);
+    for(let i=0;i<n;i++){
+      heroNodes.push({
+        x: 40+Math.random()*(heroCanvas.width-80),
+        y: 40+Math.random()*(heroCanvas.height-80),
+        vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25,
+        c: PALETTE[i%4]
+      });
+    }
+    for(let i=0;i<n;i++){
+      const links = 1+Math.floor(Math.random()*2);
+      for(let k=0;k<links;k++){
+        const j = Math.floor(Math.random()*n);
+        if(j!==i) heroEdges.push([i,j]);
+      }
+    }
+    const heroCap = document.getElementById('heroCapInfo');
+    if(heroCap){
+      heroCap.textContent = `${n} vértices · ${heroEdges.length} aristas`;
     }
   }
-  document.getElementById('heroCapInfo').textContent = `${n} vértices · ${heroEdges.length} aristas`;
+  function drawHero(){
+    hctx.clearRect(0,0,heroCanvas.width,heroCanvas.height);
+    heroNodes.forEach(n=>{
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<24||n.x>heroCanvas.width-24) n.vx*=-1;
+      if(n.y<24||n.y>heroCanvas.height-24) n.vy*=-1;
+    });
+    hctx.strokeStyle = '#394155aa'; hctx.lineWidth=1.4;
+    heroEdges.forEach(([a,b])=>{
+      hctx.beginPath(); hctx.moveTo(heroNodes[a].x,heroNodes[a].y); hctx.lineTo(heroNodes[b].x,heroNodes[b].y); hctx.stroke();
+    });
+    heroNodes.forEach(n=>{
+      hctx.beginPath(); hctx.arc(n.x,n.y,9,0,Math.PI*2);
+      hctx.fillStyle=n.c; hctx.fill();
+    });
+    requestAnimationFrame(drawHero);
+  }
+  genHero(); drawHero();
+  setInterval(()=>{ if(Math.random()<0.4) genHero(); }, 5000);
 }
-function drawHero(){
-  hctx.clearRect(0,0,heroCanvas.width,heroCanvas.height);
-  heroNodes.forEach(n=>{
-    n.x+=n.vx; n.y+=n.vy;
-    if(n.x<24||n.x>heroCanvas.width-24) n.vx*=-1;
-    if(n.y<24||n.y>heroCanvas.height-24) n.vy*=-1;
-  });
-  hctx.strokeStyle = '#394155aa'; hctx.lineWidth=1.4;
-  heroEdges.forEach(([a,b])=>{
-    hctx.beginPath(); hctx.moveTo(heroNodes[a].x,heroNodes[a].y); hctx.lineTo(heroNodes[b].x,heroNodes[b].y); hctx.stroke();
-  });
-  heroNodes.forEach(n=>{
-    hctx.beginPath(); hctx.arc(n.x,n.y,9,0,Math.PI*2);
-    hctx.fillStyle=n.c; hctx.fill();
-  });
-  requestAnimationFrame(drawHero);
-}
-genHero(); drawHero();
-setInterval(()=>{ if(Math.random()<0.4) genHero(); }, 5000);
 
 /* ============================================================
-   TEORÍA — tabs
+   TEORÍA — acordeones
    ============================================================ */
-document.querySelectorAll('.tt-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('.tt-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.theory-panel').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-'+btn.dataset.t).classList.add('active');
+document.querySelectorAll('.theory-section').forEach(section=>{
+  section.addEventListener('toggle', ()=>{
+    if(section.open) typesetMath(section);
   });
 });
 
@@ -243,6 +245,14 @@ function afterGraphChange(){
   visitOrder = {}; componentColor = {}; coloring = {};
   updatePanels();
   render();
+}
+
+function typesetMath(scope){
+  const mj = window.MathJax;
+  if(mj && typeof mj.typesetPromise === 'function'){
+    return mj.typesetPromise(scope ? [scope] : undefined).catch(()=>{});
+  }
+  return Promise.resolve();
 }
 
 /* ---- edición: modos ---- */
@@ -382,6 +392,7 @@ function updatePanels(){
 }
 updatePanels();
 render();
+window.addEventListener('load', ()=>{ typesetMath(document.getElementById('teoria')); });
 
 /* ============================================================
    LABORATORIO — cambio entre modo Editar / Algoritmos
