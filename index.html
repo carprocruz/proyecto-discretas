@@ -1,983 +1,233 @@
-<!-- Teoría Base - GraphTheory Lab -->
-<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;450&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "error-container": "#93000a",
-                        "on-secondary-fixed-variant": "#004395",
-                        "on-primary-container": "#798098",
-                        "on-secondary-fixed": "#001a42",
-                        "outline": "#909097",
-                        "inverse-primary": "#565e74",
-                        "background": "#051424",
-                        "on-primary-fixed-variant": "#3f465c",
-                        "on-tertiary-container": "#009365",
-                        "on-tertiary": "#003824",
-                        "secondary-fixed-dim": "#adc6ff",
-                        "secondary": "#adc6ff",
-                        "inverse-on-surface": "#233143",
-                        "surface-container": "#122131",
-                        "tertiary-fixed-dim": "#4edea3",
-                        "inverse-surface": "#d4e4fa",
-                        "surface-dim": "#051424",
-                        "outline-variant": "#45464d",
-                        "on-tertiary-fixed-variant": "#005236",
-                        "tertiary-fixed": "#6ffbbe",
-                        "surface-variant": "#273647",
-                        "primary-fixed-dim": "#bec6e0",
-                        "on-secondary": "#002e6a",
-                        "primary-container": "#0f172a",
-                        "error": "#ffb4ab",
-                        "primary-fixed": "#dae2fd",
-                        "on-primary-fixed": "#131b2e",
-                        "surface-container-highest": "#273647",
-                        "secondary-fixed": "#d8e2ff",
-                        "surface-tint": "#bec6e0",
-                        "surface-container-high": "#1c2b3c",
-                        "primary": "#bec6e0",
-                        "on-surface": "#d4e4fa",
-                        "secondary-container": "#0566d9",
-                        "on-background": "#d4e4fa",
-                        "tertiary-container": "#001c10",
-                        "on-secondary-container": "#e6ecff",
-                        "surface-container-low": "#0d1c2d",
-                        "on-tertiary-fixed": "#002113",
-                        "surface-bright": "#2c3a4c",
-                        "on-primary": "#283044",
-                        "on-surface-variant": "#c6c6cd",
-                        "tertiary": "#4edea3",
-                        "surface-container-lowest": "#010f1f",
-                        "on-error": "#690005",
-                        "surface": "#051424",
-                        "on-error-container": "#ffdad6"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "margin-mobile": "16px",
-                        "container-max": "1280px",
-                        "unit": "4px",
-                        "margin-desktop": "40px",
-                        "gutter": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-lg": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "body-sm": ["Inter"],
-                        "label-caps": ["Inter"],
-                        "mono-code": ["JetBrains Mono"],
-                        "mono-data": ["JetBrains Mono"],
-                        "body-md": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "mono-code": ["14px", { "lineHeight": "20px", "fontWeight": "450" }],
-                        "mono-data": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
-                    }
-                }
-            }
-        }
-    }catch(_e){}</script></head><body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md">
-
-    <!-- TopNavBar -->
-    <nav class="docked full-width top-0 border-b border-outline-variant bg-background flex justify-between items-center w-full px-margin-desktop h-16 z-50">
-        <div class="flex items-center gap-8">
-            <span class="text-headline-md font-headline-md font-bold text-primary">GraphTheory Lab</span>
-            <div class="hidden md:flex gap-6">
-                <a href="#" class="text-primary border-b-2 border-primary pb-1 font-label-caps text-label-caps cursor-pointer active:opacity-80">Theory</a>
-                <a href="#" class="text-on-surface-variant hover:text-primary transition-colors pb-1 font-label-caps text-label-caps cursor-pointer active:opacity-80">Editor</a>
-                <a href="#" class="text-on-surface-variant hover:text-primary transition-colors pb-1 font-label-caps text-label-caps cursor-pointer active:opacity-80">Algorithms</a>
-            </div>
-        </div>
-        <div class="flex items-center gap-4">
-            <span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80" data-icon="settings">settings</span>
-            <span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80" data-icon="help">help</span>
-        </div>
-    </nav>
-
-    <!-- SideNavBar (Hidden on Mobile) -->
-    <aside class="hidden md:flex flex-col fixed left-0 top-16 bottom-0 w-64 bg-surface-container shadow-sm z-40">
-        <div class="p-6 border-b border-outline-variant/30">
-            <div class="flex items-center gap-4 mb-4">
-                <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-primary" data-icon="person">person</span>
-                </div>
-                <div>
-                    <h2 class="font-headline-md text-headline-md text-primary text-[18px]">Graph Editor</h2>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant">v1.0.4 - Discrete Math</p>
-                </div>
-            </div>
-            <button class="w-full py-2 bg-primary text-on-primary rounded font-label-caps text-label-caps hover:bg-primary/90 transition-colors">Export Graph</button>
-        </div>
-        
-        <nav class="flex-1 overflow-y-auto py-4">
-            <a href="#" class="flex items-center gap-3 px-6 py-3 text-primary font-bold border-l-4 border-primary bg-primary-container/10 transition-all duration-200 ease-in-out font-label-caps text-label-caps">
-                <span class="material-symbols-outlined" data-icon="edit_note">edit_note</span> Canvas
-            </a>
-            <a href="#" class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant transition-all duration-200 ease-in-out font-label-caps text-label-caps">
-                <span class="material-symbols-outlined" data-icon="grid_on">grid_on</span> Matrix
-            </a>
-            <a href="#" class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant transition-all duration-200 ease-in-out font-label-caps text-label-caps">
-                <span class="material-symbols-outlined" data-icon="list_alt">list_alt</span> Adjacency List
-            </a>
-            
-        </nav>
-
-        <div class="p-4 border-t border-outline-variant/30">
-            <a href="#" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-variant transition-all duration-200 ease-in-out font-label-caps text-label-caps rounded">
-                <span class="material-symbols-outlined" data-icon="menu_book">menu_book</span> Docs
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-variant transition-all duration-200 ease-in-out font-label-caps text-label-caps rounded">
-                <span class="material-symbols-outlined" data-icon="contact_support">contact_support</span> Support
-            </a>
-        </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="flex-1 md:ml-64 pt-16 px-margin-mobile md:px-margin-desktop pb-24 md:pb-12 max-w-container-max mx-auto w-full">
-        
-        <!-- Hero Section -->
-        <section class="py-12 md:py-20 text-center flex flex-col items-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-variant text-tertiary font-mono-code text-mono-code mb-6 border border-outline-variant/50">
-                <span class="material-symbols-outlined text-[16px]" data-icon="hub">hub</span>
-                <span class="">Module 1: Foundations</span>
-            </div>
-            <h1 class="font-headline-lg text-headline-lg text-primary mb-6 max-w-3xl">Introducción a la Teoría de Grafos</h1>
-            <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
-                El estudio matemático de las relaciones y estructuras discretas. Un grafo $G = (V, E)$ es un conjunto de vértices conectados por aristas. Domina estos fundamentos para comprender redes complejas y algoritmos de optimización.
-            </p>
-        </section>
-
-        <!-- Bento Grid: Conceptos Fundamentales -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            
-            <!-- Vértices -->
-            <article class="bg-primary-container border border-outline-variant rounded-lg p-6 flex flex-col relative group overflow-hidden transition-colors hover:border-primary/50">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div class="h-32 mb-6 rounded bg-surface flex items-center justify-center border border-outline-variant/30 relative">
-                    <!-- Minimalist Illustration: Nodes -->
-                    <div class="relative w-full h-full flex items-center justify-center">
-                        <div class="w-4 h-4 rounded-full border-2 border-primary bg-primary/20 absolute top-8 left-8 shadow-[0_0_12px_rgba(190,198,224,0.5)]"></div>
-                        <div class="w-4 h-4 rounded-full border-2 border-outline bg-surface absolute bottom-6 right-10"></div>
-                        <div class="w-4 h-4 rounded-full border-2 border-outline bg-surface absolute top-12 right-16"></div>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="material-symbols-outlined text-primary" data-icon="scatter_plot">scatter_plot</span>
-                    <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Vértices (Nodos)</h3>
-                </div>
-                <p class="font-body-sm text-body-sm text-on-surface-variant flex-1">
-                    Las unidades fundamentales de un grafo. Representan entidades discretas como computadoras en una red, ciudades en un mapa, o estados en una máquina de Turing. Denotados como $V$.
-                </p>
-            </article>
-
-            <!-- Aristas -->
-            <article class="bg-primary-container border border-outline-variant rounded-lg p-6 flex flex-col relative group overflow-hidden transition-colors hover:border-primary/50">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-secondary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div class="h-32 mb-6 rounded bg-surface flex items-center justify-center border border-outline-variant/30 relative">
-                    <!-- Minimalist Illustration: Edges -->
-                    <div class="relative w-full h-full flex items-center justify-center">
-                        <div class="w-4 h-4 rounded-full border-2 border-outline bg-surface absolute top-8 left-8"></div>
-                        <div class="w-4 h-4 rounded-full border-2 border-outline bg-surface absolute bottom-6 right-10"></div>
-                        
-                        <!-- Line connecting them -->
-                        <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="40" y1="40" x2="180" y2="90" stroke="#adc6ff" stroke-width="2" class="opacity-80"></line>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="material-symbols-outlined text-secondary" data-icon="linear_scale">linear_scale</span>
-                    <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Aristas (Enlaces)</h3>
-                </div>
-                <p class="font-body-sm text-body-sm text-on-surface-variant flex-1">
-                    Las conexiones matemáticas entre dos vértices. Pueden ser dirigidas (vectores) o no dirigidas. Definen las relaciones o caminos posibles entre las entidades. Denotadas como $E$.
-                </p>
-            </article>
-
-            <!-- Caminos -->
-            <article class="bg-primary-container border border-outline-variant rounded-lg p-6 flex flex-col relative group overflow-hidden transition-colors hover:border-primary/50 lg:col-span-2">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-tertiary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div class="h-32 mb-6 rounded bg-surface flex items-center justify-center border border-outline-variant/30 relative overflow-hidden">
-                    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-tertiary via-surface to-surface"></div>
-                    <!-- Minimalist Illustration: Paths -->
-                    <div class="relative w-full h-full flex items-center justify-center max-w-sm mx-auto">
-                        <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120">
-                            <!-- Inactive Path -->
-                            <path d="M 30,80 Q 80,20 150,50 T 270,40" fill="none" stroke="#45464d" stroke-width="2" stroke-dasharray="4,4"></path>
-                            <!-- Active Path -->
-                            <path d="M 30,80 L 100,90 L 180,30 L 270,40" fill="none" stroke="#4edea3" stroke-width="2"></path>
-                            
-                            <!-- Nodes -->
-                            <circle cx="30" cy="80" r="6" fill="#051424" stroke="#4edea3" stroke-width="2"></circle>
-                            <circle cx="100" cy="90" r="6" fill="#051424" stroke="#4edea3" stroke-width="2"></circle>
-                            <circle cx="180" cy="30" r="6" fill="#051424" stroke="#4edea3" stroke-width="2"></circle>
-                            <circle cx="270" cy="40" r="6" fill="#051424" stroke="#4edea3" stroke-width="2"></circle>
-                            
-                            <circle cx="150" cy="50" r="6" fill="#051424" stroke="#45464d" stroke-width="2"></circle>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="material-symbols-outlined text-tertiary" data-icon="route">route</span>
-                    <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Caminos y Trayectorias</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <p class="font-body-sm text-body-sm text-on-surface-variant">
-                        Una secuencia finita de aristas que conecta una sucesión de vértices distintos. La longitud de un camino es el número de aristas que lo componen. 
-                    </p>
-                    <div class="bg-surface p-3 rounded border border-outline-variant/30 font-mono-code text-mono-code text-[11px] text-primary/80 flex flex-col justify-center">
-                        <code>Path P = (v_1, e_1, v_2, ..., e_k, v_{k+1})</code>
-                        <code class="mt-1 text-on-surface-variant">Length(P) = k</code>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Componentes Conex-->
-            <article class="bg-primary-container border border-outline-variant rounded-lg p-6 flex flex-col relative group overflow-hidden transition-colors hover:border-primary/50 lg:col-span-4">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-secondary-container to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div class="flex flex-col md:flex-row gap-6">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="material-symbols-outlined text-secondary-container" data-icon="workspaces">workspaces</span>
-                            <h3 class="font-headline-md text-[20px] font-semibold text-on-surface">Componentes Conexas</h3>
-                        </div>
-                        <p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
-                            En un grafo no dirigido, una componente conexa es un subgrafo en el que cualquier par de vértices está conectado por al menos un camino, y no está conectado a ningún vértice adicional en el supergrafo. Identificar componentes conexas es vital para el análisis de topologías de red y algoritmos de clustering.
-                        </p>
-                        <button class="bg-primary text-on-primary px-4 py-2 rounded font-label-caps text-label-caps hover:bg-primary/90 transition-colors inline-flex items-center gap-2">
-                            Explorar Algoritmo BFS
-                            <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
-                        </button>
-                    </div>
-                    
-                    <div class="h-48 md:w-1/2 rounded bg-surface flex items-center justify-center border border-outline-variant/30 relative overflow-hidden">
-                        <!-- Technical Map/Graph Illustration -->
-                        <div class="relative w-full h-full">
-                             <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#45464d_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                             
-                             <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
-                                <!-- Component 1 -->
-                                <g class="stroke-secondary-container opacity-80" stroke-width="1.5">
-                                    <line x1="50" y1="50" x2="100" y2="80"></line>
-                                    <line x1="100" y1="80" x2="120" y2="40"></line>
-                                    <line x1="120" y1="40" x2="50" y2="50"></line>
-                                    <line x1="100" y1="80" x2="80" y2="130"></line>
-                                </g>
-                                <g fill="#051424" stroke="#0566d9" stroke-width="2">
-                                    <circle cx="50" cy="50" r="5"></circle>
-                                    <circle cx="100" cy="80" r="5" class="fill-secondary-container/20"></circle>
-                                    <circle cx="120" cy="40" r="5"></circle>
-                                    <circle cx="80" cy="130" r="5"></circle>
-                                </g>
-
-                                <!-- Component 2 -->
-                                <g class="stroke-tertiary opacity-80" stroke-width="1.5">
-                                    <line x1="250" y1="100" x2="300" y2="150"></line>
-                                    <line x1="300" y1="150" x2="350" y2="110"></line>
-                                    <line x1="250" y1="100" x2="350" y2="110"></line>
-                                </g>
-                                <g fill="#051424" stroke="#4edea3" stroke-width="2">
-                                    <circle cx="250" cy="100" r="5"></circle>
-                                    <circle cx="300" cy="150" r="5"></circle>
-                                    <circle cx="350" cy="110" r="5"></circle>
-                                </g>
-                             </svg>
-                             
-                             <!-- Bounding Boxes to emphasize components -->
-                             <div class="absolute border border-secondary-container/30 border-dashed rounded-lg" style="left: 30px; top: 20px; width: 110px; height: 130px; background: rgba(5, 102, 217, 0.05);"></div>
-                             <div class="absolute border border-tertiary/30 border-dashed rounded-lg" style="left: 230px; top: 80px; width: 140px; height: 90px; background: rgba(78, 222, 163, 0.05);"></div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-        </section>
-
-    </main>
-
-    <!-- Bottom Navigation (Mobile Only) -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t border-outline-variant h-16 flex justify-around items-center px-4 z-50">
-        <a href="#" class="flex flex-col items-center justify-center w-full h-full text-primary">
-            <span class="material-symbols-outlined mb-1" data-icon="menu_book" data-weight="fill" style="font-variation-settings: 'FILL' 1;">menu_book</span>
-            <span class="font-label-caps text-[10px]">Theory</span></a></nav></body></html>
-
-<!-- Algoritmos BFS/DFS - GraphTheory Lab -->
 <!DOCTYPE html>
-
-<html class="dark" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>GraphTheory Lab - Algorithms</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;450&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "error-container": "#93000a",
-                      "on-secondary-fixed-variant": "#004395",
-                      "on-primary-container": "#798098",
-                      "on-secondary-fixed": "#001a42",
-                      "outline": "#909097",
-                      "inverse-primary": "#565e74",
-                      "background": "#051424",
-                      "on-primary-fixed-variant": "#3f465c",
-                      "on-tertiary-container": "#009365",
-                      "on-tertiary": "#003824",
-                      "secondary-fixed-dim": "#adc6ff",
-                      "secondary": "#adc6ff",
-                      "inverse-on-surface": "#233143",
-                      "surface-container": "#122131",
-                      "tertiary-fixed-dim": "#4edea3",
-                      "inverse-surface": "#d4e4fa",
-                      "surface-dim": "#051424",
-                      "outline-variant": "#45464d",
-                      "on-tertiary-fixed-variant": "#005236",
-                      "tertiary-fixed": "#6ffbbe",
-                      "surface-variant": "#273647",
-                      "primary-fixed-dim": "#bec6e0",
-                      "on-secondary": "#002e6a",
-                      "primary-container": "#0f172a",
-                      "error": "#ffb4ab",
-                      "primary-fixed": "#dae2fd",
-                      "on-primary-fixed": "#131b2e",
-                      "surface-container-highest": "#273647",
-                      "secondary-fixed": "#d8e2ff",
-                      "surface-tint": "#bec6e0",
-                      "surface-container-high": "#1c2b3c",
-                      "primary": "#bec6e0",
-                      "on-surface": "#d4e4fa",
-                      "secondary-container": "#0566d9",
-                      "on-background": "#d4e4fa",
-                      "tertiary-container": "#001c10",
-                      "on-secondary-container": "#e6ecff",
-                      "surface-container-low": "#0d1c2d",
-                      "on-tertiary-fixed": "#002113",
-                      "surface-bright": "#2c3a4c",
-                      "on-primary": "#283044",
-                      "on-surface-variant": "#c6c6cd",
-                      "tertiary": "#4edea3",
-                      "surface-container-lowest": "#010f1f",
-                      "on-error": "#690005",
-                      "surface": "#051424",
-                      "on-error-container": "#ffdad6"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "margin-mobile": "16px",
-                      "container-max": "1280px",
-                      "unit": "4px",
-                      "margin-desktop": "40px",
-                      "gutter": "24px"
-              },
-              "fontFamily": {
-                      "headline-lg": [
-                              "Inter"
-                      ],
-                      "headline-md": [
-                              "Inter"
-                      ],
-                      "body-sm": [
-                              "Inter"
-                      ],
-                      "label-caps": [
-                              "Inter"
-                      ],
-                      "mono-code": [
-                              "JetBrains Mono"
-                      ],
-                      "mono-data": [
-                              "JetBrains Mono"
-                      ],
-                      "body-md": [
-                              "Inter"
-                      ]
-              },
-              "fontSize": {
-                      "headline-lg": [
-                              "32px",
-                              {
-                                      "lineHeight": "40px",
-                                      "letterSpacing": "-0.02em",
-                                      "fontWeight": "700"
-                              }
-                      ],
-                      "headline-md": [
-                              "24px",
-                              {
-                                      "lineHeight": "32px",
-                                      "fontWeight": "600"
-                              }
-                      ],
-                      "body-sm": [
-                              "14px",
-                              {
-                                      "lineHeight": "20px",
-                                      "fontWeight": "400"
-                              }
-                      ],
-                      "label-caps": [
-                              "12px",
-                              {
-                                      "lineHeight": "16px",
-                                      "letterSpacing": "0.05em",
-                                      "fontWeight": "600"
-                              }
-                      ],
-                      "mono-code": [
-                              "14px",
-                              {
-                                      "lineHeight": "20px",
-                                      "fontWeight": "450"
-                              }
-                      ],
-                      "mono-data": [
-                              "12px",
-                              {
-                                      "lineHeight": "16px",
-                                      "fontWeight": "400"
-                              }
-                      ],
-                      "body-md": [
-                              "16px",
-                              {
-                                      "lineHeight": "24px",
-                                      "fontWeight": "400"
-                              }
-                      ]
-              }
-            },
-          },
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        /* Graph Node Animations */
-        @keyframes pulse-bfs {
-            0% { box-shadow: 0 0 0 0 rgba(173, 198, 255, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(173, 198, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(173, 198, 255, 0); }
-        }
-        @keyframes pulse-dfs {
-            0% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(78, 222, 163, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0); }
-        }
-
-        .node-bfs-active {
-            border-color: theme('colors.secondary');
-            background-color: theme('colors.secondary-fixed-dim');
-            color: theme('colors.on-secondary');
-            animation: pulse-bfs 1.5s infinite;
-        }
-        .node-dfs-active {
-            border-color: theme('colors.tertiary');
-            background-color: theme('colors.tertiary-fixed-dim');
-            color: theme('colors.on-tertiary');
-            animation: pulse-dfs 1.5s infinite;
-        }
-        
-        .node-visited {
-            border-color: theme('colors.outline');
-            background-color: theme('colors.surface-variant');
-            color: theme('colors.on-surface-variant');
-        }
-    </style>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nodo & Arista — Teoría de Grafos interactiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-hidden">
-<!-- TopNavBar -->
-<header class="bg-background dark:bg-background border-b border-outline-variant dark:border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 z-50 relative shrink-0">
-<div class="flex items-center gap-8">
-<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">
-                GraphTheory Lab
-            </div>
-<nav class="hidden md:flex items-center h-full">
-<a class="h-full flex items-center px-4 text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">
-<span class="font-body-md text-body-md">Theory</span>
-</a>
-<a class="h-full flex items-center px-4 text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors cursor-pointer active:opacity-80" href="#">
-<span class="font-body-md text-body-md">Editor</span>
-</a>
-<a class="h-full flex items-center px-4 text-primary dark:text-primary border-b-2 border-primary pb-1 cursor-pointer active:opacity-80" href="#">
-<span class="font-body-md text-body-md">Algorithms</span>
-</a>
+<body>
+
+<nav>
+  <div class="navrow">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="5" cy="6" r="4" fill="#ff6b5b"/><circle cx="21" cy="5" r="4" fill="#ffbe4d"/><circle cx="6" cy="21" r="4" fill="#4fd6ca"/><circle cx="20" cy="20" r="4" fill="#a293ff"/><line x1="5" y1="6" x2="21" y2="5" stroke="#39415580" stroke-width="2"/><line x1="5" y1="6" x2="6" y2="21" stroke="#39415580" stroke-width="2"/><line x1="21" y1="5" x2="20" y2="20" stroke="#39415580" stroke-width="2"/></svg>
+      Nodo &amp; Arista
+    </div>
+    <div class="navlinks">
+      <a href="#teoria">Teoría</a>
+      <a href="#laboratorio">Laboratorio</a>
+      <a href="#retos">Retos</a>
+    </div>
+  </div>
 </nav>
-</div>
-<div class="flex items-center gap-4">
-<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-</button>
-<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors">
-<span class="material-symbols-outlined" data-icon="help">help</span>
-</button>
-</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Matemáticas discretas · Teoría de grafos</div>
+      <h1>Los grafos no se memorizan, <em>se construyen.</em></h1>
+      <p class="lead">Una manera visual de aprender vértices, aristas, recorridos y coloreo: dibuja tu propio grafo, míralo pensar paso a paso y pon a prueba lo que entendiste con retos que se verifican sobre lo que tú construiste.</p>
+      <div class="hero-ctas">
+        <a href="#laboratorio" class="btn primary">Abrir el laboratorio →</a>
+        <a href="#teoria" class="btn">Ver la teoría</a>
+      </div>
+    </div>
+    <div class="hero-canvas-card">
+      <canvas id="heroCanvas" width="520" height="360"></canvas>
+      <div class="hero-canvas-cap"><span>grafo aleatorio, en vivo</span><span id="heroCapInfo">n vértices · m aristas</span></div>
+    </div>
+  </div>
 </header>
-<!-- Main Workspace -->
-<div class="flex flex-1 overflow-hidden relative">
-<!-- Algorithm Control Panel (Left Side) -->
-<aside class="w-80 bg-surface-container dark:bg-surface-container border-r border-outline-variant/30 flex flex-col z-40 shrink-0 h-full overflow-y-auto">
-<div class="p-6 flex flex-col h-full gap-6">
-<div class="flex flex-col gap-1">
-<h2 class="font-headline-md text-headline-md text-primary">Traversal</h2>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Select an algorithm to visualize pathfinding on the current graph.</p>
-</div>
-<!-- Controls -->
-<div class="flex flex-col gap-4">
-<!-- BFS Button -->
-<button class="w-full bg-secondary-container text-on-secondary-container hover:bg-secondary transition-colors py-3 px-4 rounded font-body-md text-body-md font-bold flex items-center justify-between group" id="btn-bfs">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined">account_tree</span>
-<span>Breadth-First Search</span>
-</div>
-<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">play_arrow</span>
-</button>
-<!-- DFS Button -->
-<button class="w-full bg-surface-bright border border-tertiary/30 text-tertiary hover:bg-surface-variant transition-colors py-3 px-4 rounded font-body-md text-body-md font-bold flex items-center justify-between group" id="btn-dfs">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined">route</span>
-<span>Depth-First Search</span>
-</div>
-<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">play_arrow</span>
-</button>
-</div>
-<hr class="border-outline-variant/50"/>
-<!-- Playback Controls -->
-<div class="flex flex-col gap-4">
-<div class="flex justify-between items-center">
-<span class="font-label-caps text-label-caps text-on-surface-variant">EXECUTION SPEED</span>
-<span class="font-mono-code text-mono-code text-primary" id="speed-value">1.0x</span>
-</div>
-<input class="w-full accent-primary h-1 bg-surface-variant rounded-lg appearance-none cursor-pointer" max="2.0" min="0.1" step="0.1" type="range" value="1.0"/>
-<div class="flex items-center justify-center gap-4 mt-2">
-<button class="p-3 rounded-full bg-surface-bright hover:bg-surface-variant text-on-surface border border-outline-variant/30 transition-colors" title="Step Back">
-<span class="material-symbols-outlined">skip_previous</span>
-</button>
-<button class="p-4 rounded-full bg-primary-container hover:bg-primary-fixed/20 text-primary border border-primary/30 transition-colors" title="Play/Pause">
-<span class="material-symbols-outlined text-2xl">pause</span>
-</button>
-<button class="p-3 rounded-full bg-surface-bright hover:bg-surface-variant text-on-surface border border-outline-variant/30 transition-colors" title="Step Forward">
-<span class="material-symbols-outlined">skip_next</span>
-</button>
-</div>
-</div>
-<!-- Spacer -->
-<div class="flex-1"></div>
-<!-- Setup Options -->
-<div class="bg-surface-container-high rounded p-4 border border-outline-variant/20 flex flex-col gap-3">
-<span class="font-label-caps text-label-caps text-on-surface-variant">STARTING NODE</span>
-<select class="w-full bg-surface text-on-surface border border-outline-variant rounded p-2 font-mono-code text-mono-code focus:ring-1 focus:ring-primary focus:outline-none">
-<option value="A">Node A</option>
-<option value="B">Node B</option>
-<option value="C">Node C</option>
-<option value="D">Node D</option>
-</select>
-</div>
-</div>
-</aside>
-<!-- Graph Canvas Area -->
-<main class="flex-1 relative bg-surface-dim overflow-hidden flex flex-col">
-<!-- The Graph Canvas (Interactive Area) -->
-<div class="flex-1 relative cursor-grab active:cursor-grabbing" id="graph-container" style="background-image: radial-gradient(circle at 2px 2px, theme('colors.outline-variant') 1px, transparent 0); background-size: 32px 32px; background-position: -2px -2px;">
-<!-- Edges (SVG Overlay) -->
-<svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-<line stroke="theme('colors.outline-variant')" stroke-width="2" x1="20%" x2="40%" y1="30%" y2="50%"></line>
-<line stroke="theme('colors.outline-variant')" stroke-width="2" x1="20%" x2="30%" y1="30%" y2="70%"></line>
-<line stroke="theme('colors.secondary')" stroke-width="3" x1="40%" x2="60%" y1="50%" y2="40%"></line> <!-- Active Edge -->
-<line stroke="theme('colors.outline-variant')" stroke-width="2" x1="40%" x2="50%" y1="50%" y2="80%"></line>
-<line stroke="theme('colors.outline-variant')" stroke-width="2" x1="60%" x2="80%" y1="40%" y2="60%"></line>
-<line stroke="theme('colors.outline-variant')" stroke-width="2" x1="50%" x2="80%" y1="80%" y2="60%"></line>
-</svg>
-<!-- Nodes -->
-<!-- Node A -->
-<div class="absolute w-12 h-12 rounded-full border-2 border-outline bg-surface-container flex items-center justify-center font-mono-code text-mono-code text-on-surface shadow-sm node-visited" style="left: calc(20% - 24px); top: calc(30% - 24px);">A</div>
-<!-- Node B -->
-<div class="absolute w-12 h-12 rounded-full border-2 border-outline bg-surface-container flex items-center justify-center font-mono-code text-mono-code text-on-surface shadow-sm node-visited" style="left: calc(30% - 24px); top: calc(70% - 24px);">B</div>
-<!-- Node C (Active BFS) -->
-<div class="absolute w-12 h-12 rounded-full border-2 flex items-center justify-center font-mono-code text-mono-code shadow-sm node-bfs-active z-10" style="left: calc(40% - 24px); top: calc(50% - 24px);">C</div>
-<!-- Node D (Target) -->
-<div class="absolute w-12 h-12 rounded-full border-2 border-secondary bg-surface-container flex items-center justify-center font-mono-code text-mono-code text-on-surface shadow-sm" style="left: calc(60% - 24px); top: calc(40% - 24px);">D</div>
-<!-- Node E -->
-<div class="absolute w-12 h-12 rounded-full border-2 border-outline bg-surface-container flex items-center justify-center font-mono-code text-mono-code text-on-surface shadow-sm" style="left: calc(50% - 24px); top: calc(80% - 24px);">E</div>
-<!-- Node F -->
-<div class="absolute w-12 h-12 rounded-full border-2 border-outline bg-surface-container flex items-center justify-center font-mono-code text-mono-code text-on-surface shadow-sm" style="left: calc(80% - 24px); top: calc(60% - 24px);">F</div>
-<!-- Overlay Status Badge -->
-<div class="absolute top-6 right-6 bg-surface-container-highest/80 backdrop-blur-sm border border-outline-variant px-4 py-2 rounded-full flex items-center gap-2 shadow-lg">
-<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-<span class="font-mono-code text-mono-code text-on-surface">BFS Running</span>
-</div>
-</div>
-<!-- Terminal / Console (Bottom Docked) -->
-<div class="h-48 bg-surface-container-lowest border-t border-outline-variant flex flex-col shrink-0">
-<div class="px-4 py-2 bg-surface-container-high border-b border-outline-variant flex justify-between items-center">
-<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-2">
-<span class="material-symbols-outlined text-[16px]">terminal</span>
-                        EXECUTION LOG
-                    </span>
-<button class="text-on-surface-variant hover:text-on-surface p-1">
-<span class="material-symbols-outlined text-[16px]">clear_all</span>
-</button>
-</div>
-<div class="flex-1 p-4 overflow-y-auto font-mono-data text-mono-data text-on-surface-variant flex flex-col gap-1" id="console-output">
-<div class="flex gap-4">
-<span class="text-outline">00:00:00</span>
-<span class="text-primary">&gt; Iniciar BFS desde Nodo A</span>
-</div>
-<div class="flex gap-4">
-<span class="text-outline">00:00:01</span>
-<span>Visitando Nodo A... [Nivel 0]</span>
-</div>
-<div class="flex gap-4">
-<span class="text-outline">00:00:02</span>
-<span class="text-outline-variant">Añadiendo vecinos de A a la cola: [B, C]</span>
-</div>
-<div class="flex gap-4">
-<span class="text-outline">00:00:03</span>
-<span>Visitando Nodo B... [Nivel 1]</span>
-</div>
-<div class="flex gap-4">
-<span class="text-outline">00:00:04</span>
-<span class="text-outline-variant">Nodo B no tiene vecinos no visitados.</span>
-</div>
-<div class="flex gap-4">
-<span class="text-outline">00:00:05</span>
-<span class="text-secondary font-bold">Visitando Nodo C... [Nivel 1]</span>
-</div>
-<div class="flex gap-4 opacity-50 animate-pulse">
-<span class="text-outline">00:00:06</span>
-<span>Evaluando vecinos de C...</span>
-</div>
-</div>
-</div>
-</main>
-</div>
-<script>
-        // Simple interactions to demonstrate states
-        document.getElementById('btn-bfs').addEventListener('click', function() {
-            this.classList.add('ring-2', 'ring-secondary', 'ring-offset-2', 'ring-offset-background');
-            document.getElementById('btn-dfs').classList.remove('ring-2', 'ring-tertiary', 'ring-offset-2', 'ring-offset-background');
-        });
 
-        document.getElementById('btn-dfs').addEventListener('click', function() {
-            this.classList.add('ring-2', 'ring-tertiary', 'ring-offset-2', 'ring-offset-background');
-            document.getElementById('btn-bfs').classList.remove('ring-2', 'ring-secondary', 'ring-offset-2', 'ring-offset-background');
-        });
-        
-        // Auto-scroll terminal
-        const consoleEl = document.getElementById('console-output');
-        consoleEl.scrollTop = consoleEl.scrollHeight;
-    </script>
-</body></html>
+<!-- ================= TEORÍA ================= -->
+<section class="section" id="teoria">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> 01 · Fundamentos</div>
+      <h2>La teoría, sin el tablero</h2>
+      <p>Seis bloques que cubren lo esencial del curso. Ábrelos, léelos en dos minutos y pruébalos enseguida en el laboratorio.</p>
+    </div>
 
-<!-- Editor de Grafos - GraphTheory Lab -->
-<!DOCTYPE html><html lang="es" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "error-container": "#93000a",
-                        "on-secondary-fixed-variant": "#004395",
-                        "on-primary-container": "#798098",
-                        "on-secondary-fixed": "#001a42",
-                        "outline": "#909097",
-                        "inverse-primary": "#565e74",
-                        "background": "#051424",
-                        "on-primary-fixed-variant": "#3f465c",
-                        "on-tertiary-container": "#009365",
-                        "on-tertiary": "#003824",
-                        "secondary-fixed-dim": "#adc6ff",
-                        "secondary": "#adc6ff",
-                        "inverse-on-surface": "#233143",
-                        "surface-container": "#122131",
-                        "tertiary-fixed-dim": "#4edea3",
-                        "inverse-surface": "#d4e4fa",
-                        "surface-dim": "#051424",
-                        "outline-variant": "#45464d",
-                        "on-tertiary-fixed-variant": "#005236",
-                        "tertiary-fixed": "#6ffbbe",
-                        "surface-variant": "#273647",
-                        "primary-fixed-dim": "#bec6e0",
-                        "on-secondary": "#002e6a",
-                        "primary-container": "#0f172a",
-                        "error": "#ffb4ab",
-                        "primary-fixed": "#dae2fd",
-                        "on-primary-fixed": "#131b2e",
-                        "surface-container-highest": "#273647",
-                        "secondary-fixed": "#d8e2ff",
-                        "surface-tint": "#bec6e0",
-                        "surface-container-high": "#1c2b3c",
-                        "primary": "#bec6e0",
-                        "on-surface": "#d4e4fa",
-                        "secondary-container": "#0566d9",
-                        "on-background": "#d4e4fa",
-                        "tertiary-container": "#001c10",
-                        "on-secondary-container": "#e6ecff",
-                        "surface-container-low": "#0d1c2d",
-                        "on-tertiary-fixed": "#002113",
-                        "surface-bright": "#2c3a4c",
-                        "on-primary": "#283044",
-                        "on-surface-variant": "#c6c6cd",
-                        "tertiary": "#4edea3",
-                        "surface-container-lowest": "#010f1f",
-                        "on-error": "#690005",
-                        "surface": "#051424",
-                        "on-error-container": "#ffdad6"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "margin-mobile": "16px",
-                        "container-max": "1280px",
-                        "unit": "4px",
-                        "margin-desktop": "40px",
-                        "gutter": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-lg": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "body-sm": ["Inter"],
-                        "label-caps": ["Inter"],
-                        "mono-code": ["JetBrains Mono"],
-                        "mono-data": ["JetBrains Mono"],
-                        "body-md": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
-                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
-                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "mono-code": ["14px", { "lineHeight": "20px", "fontWeight": "450" }],
-                        "mono-data": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
-                    }
-                }
-            }
-        }
-    }catch(_e){}</script></head><body class="bg-background text-on-background h-screen overflow-hidden flex flex-col font-body-md">
+    <div class="theory-tabs">
+      <button class="tt-btn active" data-t="def">Definiciones</button>
+      <button class="tt-btn" data-t="rep">Representación</button>
+      <button class="tt-btn" data-t="prop">Propiedades</button>
+      <button class="tt-btn" data-t="tipos">Tipos especiales</button>
+      <button class="tt-btn" data-t="algo">Algoritmos</button>
+      <button class="tt-btn" data-t="comp">Aspectos computacionales</button>
+    </div>
 
-    <!-- TopNavBar -->
-    <header class="bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-desktop h-16 shrink-0 z-50">
-        <div class="text-headline-md font-headline-md font-bold text-primary">GraphTheory Lab</div>
-        <nav class="hidden md:flex space-x-8">
-            <a href="#" class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer font-body-md">Theory</a>
-            <a href="#" class="text-primary border-b-2 border-primary pb-1 cursor-pointer font-body-md">Editor</a>
-            <a href="#" class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer font-body-md">Algorithms</a>
-        </nav>
-        <div class="flex space-x-4">
-            <button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
-                <span class="material-symbols-outlined">settings</span>
-            </button>
-            <button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">
-                <span class="material-symbols-outlined">help</span>
-            </button>
+    <div class="theory-panel active" id="panel-def">
+      <div class="concept-grid">
+        <details class="concept" open><summary>Grafo</summary><p>Un grafo <code>G = (V, E)</code> es un conjunto de <strong>vértices</strong> V (los puntos) junto con un conjunto de <strong>aristas</strong> E (las conexiones entre pares de vértices). Es la estructura que usamos para modelar cualquier cosa que se pueda pensar como "elementos y relaciones entre ellos": personas y amistades, ciudades y carreteras, tareas y dependencias.</p><span class="tag">V, E</span></details>
+        <details class="concept"><summary>Vértices y aristas</summary><p>Los <strong>vértices</strong> (o nodos) son las entidades. Las <strong>aristas</strong> son los enlaces entre dos vértices. Una arista puede tener peso (costo, distancia) o ser simple (solo indica que existe conexión).</p></details>
+        <details class="concept"><summary>Grafos dirigidos vs. no dirigidos</summary><p>En un grafo <strong>no dirigido</strong> la arista {A, B} se recorre en ambos sentidos. En uno <strong>dirigido</strong>, la arista (A, B) solo va de A hacia B — como una calle de un solo sentido. En el laboratorio puedes alternar entre ambos con un interruptor.</p></details>
+      </div>
+    </div>
+
+    <div class="theory-panel" id="panel-rep">
+      <div class="concept-grid">
+        <details class="concept" open><summary>Lista de adyacencia</summary><p>Para cada vértice se guarda la lista de vértices a los que está conectado. Es compacta y eficiente cuando el grafo tiene pocas aristas en relación con sus vértices (grafo disperso).</p><span class="tag">A: [B, C]</span></details>
+        <details class="concept"><summary>Matriz de adyacencia</summary><p>Una tabla n×n donde la celda (i, j) vale 1 si existe arista entre el vértice i y el vértice j, y 0 si no. Es simétrica en grafos no dirigidos. El laboratorio la genera automáticamente a partir de tu grafo.</p></details>
+        <details class="concept"><summary>Matriz de incidencia</summary><p>Una tabla de vértices × aristas donde la celda marca si un vértice es extremo de esa arista. Es útil para trabajar con multigrafos o para álgebra lineal aplicada a grafos.</p></details>
+      </div>
+    </div>
+
+    <div class="theory-panel" id="panel-prop">
+      <div class="concept-grid">
+        <details class="concept" open><summary>Grado de un vértice</summary><p>El número de aristas que llegan o salen de un vértice. En grafos dirigidos se distingue entre grado de entrada y grado de salida. El laboratorio te muestra el grado de cada vértice en tiempo real.</p></details>
+        <details class="concept"><summary>Camino</summary><p>Una secuencia de vértices donde cada par consecutivo está unido por una arista, sin repetir vértices. Un <strong>ciclo</strong> es un camino que vuelve a su vértice inicial.</p></details>
+        <details class="concept"><summary>Conectividad y componentes conexas</summary><p>Un grafo es <strong>conexo</strong> si existe un camino entre cualquier par de vértices. Si no lo es, se divide en <strong>componentes conexas</strong>: subgrafos internamente conectados pero aislados entre sí. Pruébalo en Retos con tu propio grafo.</p></details>
+      </div>
+    </div>
+
+    <div class="theory-panel" id="panel-tipos">
+      <div class="concept-grid">
+        <details class="concept" open><summary>Árboles</summary><p>Un grafo conexo sin ciclos. Con n vértices, un árbol tiene siempre exactamente n − 1 aristas. Son la base de estructuras jerárquicas: sistemas de archivos, organigramas, árboles de decisión.</p></details>
+        <details class="concept"><summary>Grafos completos</summary><p>Todo par de vértices está conectado. Se denota Kₙ y tiene n(n−1)/2 aristas. Es el grafo con más aristas posibles sin repetir conexiones.</p></details>
+        <details class="concept"><summary>Grafos bipartitos</summary><p>Sus vértices se pueden dividir en dos grupos, de modo que toda arista une un vértice de un grupo con uno del otro grupo — nunca dentro del mismo grupo. Ponlo a prueba: constrúyelo y verifícalo en la sección de Retos.</p></details>
+        <details class="concept"><summary>Grafos planares</summary><p>Se pueden dibujar en un plano sin que ninguna arista cruce a otra. Son la razón por la que un mapa de países puede colorearse con solo cuatro colores sin que dos vecinos compartan color.</p></details>
+      </div>
+    </div>
+
+    <div class="theory-panel" id="panel-algo">
+      <div class="concept-grid">
+        <details class="concept" open><summary>BFS — recorrido en anchura</summary><p>Explora el grafo por niveles: primero los vecinos directos del vértice inicial, luego los vecinos de esos vecinos, y así sucesivamente, usando una cola (FIFO). Encuentra el camino más corto en número de aristas.</p></details>
+        <details class="concept"><summary>DFS — recorrido en profundidad</summary><p>Avanza tan lejos como puede por una rama antes de retroceder, usando una pila (LIFO) o recursión. Es la base de la detección de ciclos y del cálculo de componentes conexas.</p></details>
+        <details class="concept"><summary>Coloreo de grafos</summary><p>Asignar colores a los vértices de modo que dos vértices conectados nunca compartan color, usando la menor cantidad de colores posible. Esa cantidad mínima es el <strong>número cromático</strong> del grafo.</p></details>
+        <details class="concept"><summary>Número y polinomio cromático</summary><p>El algoritmo voraz (greedy) que verás en el laboratorio da una <em>aproximación por arriba</em> del número cromático real, no siempre el valor exacto. El polinomio cromático P(G, k) cuenta, para cada k, de cuántas formas distintas se puede colorear el grafo con k colores — es una introducción útil para grafos pequeños.</p></details>
+      </div>
+    </div>
+
+    <div class="theory-panel" id="panel-comp">
+      <div class="concept-grid">
+        <details class="concept" open><summary>Modelado con estructuras discretas</summary><p>Casi cualquier problema de "elementos + relaciones" se puede traducir a un grafo: rutas de transporte, redes sociales, dependencias entre tareas, circuitos, mapas de estados. El primer paso siempre es decidir qué son los vértices y qué son las aristas.</p></details>
+        <details class="concept"><summary>Implementación de algoritmos</summary><p>Todo lo que ves correr en el laboratorio — BFS, DFS, coloreo — está implementado en JavaScript sobre listas de adyacencia, exactamente como lo escribirías en un curso de estructuras de datos.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LABORATORIO ================= -->
+<section class="section" id="laboratorio" style="background:var(--ink-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot" style="background:var(--c2)"></span> 02 · Laboratorio</div>
+      <h2>Construye tu grafo, luego míralo pensar</h2>
+      <p>Edita el grafo con el mouse o el dedo. Cambia al modo Algoritmos para correr BFS, DFS, componentes conexas o coloreo sobre lo que construiste.</p>
+    </div>
+
+    <div class="lab-grid">
+      <div class="lab-card">
+        <div class="lab-mode-row">
+          <button class="btn small active" id="tabEdit" data-labtab="edit">✏️ Editar grafo</button>
+          <button class="btn small" id="tabAlgo" data-labtab="algo">▶ Algoritmos</button>
         </div>
-    </header>
 
-    <div class="flex flex-1 overflow-hidden relative">
-        
-        <!-- SideNavBar -->
-        <aside class="bg-surface-container w-64 h-full shrink-0 flex flex-col border-r border-outline-variant z-40 hidden md:flex">
-            <div class="p-6 border-b border-outline-variant">
-                <div class="flex items-center space-x-3 mb-2">
-                    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold">
-                        <span class="material-symbols-outlined" data-weight="fill">person</span>
-                    </div>
-                    <div class="">
-                        <h2 class="font-headline-md text-headline-md text-primary text-[18px] leading-tight">Graph Editor</h2>
-                        <p class="text-on-surface-variant font-body-sm text-[12px]">v1.0.4 - Discrete Math</p>
-                    </div>
-                </div>
-            </div>
-            
-            <nav class="flex-1 py-4 flex flex-col gap-1">
-                <a href="#" class="flex items-center px-6 py-3 text-primary font-bold border-l-4 border-primary bg-primary-container/10 transition-all duration-200 ease-in-out">
-                    <span class="material-symbols-outlined mr-3">edit_note</span>
-                    <span class="font-label-caps text-label-caps uppercase">Canvas</span>
-                </a>
-                <a href="#" class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-variant transition-all duration-200 ease-in-out">
-                    <span class="material-symbols-outlined mr-3">grid_on</span>
-                    <span class="font-label-caps text-label-caps uppercase">Matrix</span>
-                </a>
-                <a href="#" class="flex items-center px-6 py-3 text-on-surface-variant hover:bg-surface-variant transition-all duration-200 ease-in-out">
-                    <span class="material-symbols-outlined mr-3">list_alt</span>
-                    <span class="font-label-caps text-label-caps uppercase">Adjacency List</span>
-                </a>
-                
-            </nav>
+        <div class="lab-canvas-wrap">
+          <canvas id="labCanvas" width="900" height="520"></canvas>
+        </div>
 
-            <div class="p-6 border-t border-outline-variant">
-                <button class="w-full py-2 bg-primary text-on-primary rounded font-label-caps text-label-caps uppercase hover:opacity-90 transition-opacity mb-4">
-                    Export Graph
-                </button>
-                <div class="flex flex-col gap-2">
-                    <a href="#" class="flex items-center text-on-surface-variant hover:text-primary transition-colors text-sm">
-                        <span class="material-symbols-outlined mr-2 text-[18px]">menu_book</span> Docs
-                    </a>
-                    <a href="#" class="flex items-center text-on-surface-variant hover:text-primary transition-colors text-sm">
-                        <span class="material-symbols-outlined mr-2 text-[18px]">contact_support</span> Support
-                    </a>
-                </div>
-            </div>
-        </aside>
+        <!-- edit toolbar -->
+        <div id="editToolbar" class="lab-toolbar">
+          <div class="grp">
+            <button class="btn small active" data-mode="move">🖐 Mover</button>
+            <button class="btn small" data-mode="addNode">➕ Vértice</button>
+            <button class="btn small" data-mode="connect">🔗 Conectar</button>
+            <button class="btn small" data-mode="delete">🗑 Borrar</button>
+          </div>
+          <div class="grp">
+            <label class="switch"><input type="checkbox" id="directedToggle"> dirigido</label>
+            <button class="btn small" id="randomGraphBtn">🎲 Aleatorio</button>
+            <button class="btn small danger" id="clearGraphBtn">Limpiar</button>
+          </div>
+        </div>
+        <div class="hint" id="editHint">Modo Mover: arrastra un vértice para reubicarlo. Cambia de modo arriba para añadir vértices, conectar o borrar.</div>
 
-        <!-- Main Workspace Area -->
-        <main class="flex-1 flex flex-col md:flex-row relative">
-            
-            <!-- Floating Toolbar (Canvas Controls) -->
-            <div class="absolute top-6 left-6 z-30 bg-surface-container-high rounded-xl border border-outline-variant shadow-lg p-2 flex flex-col gap-2">
-                <button class="w-10 h-10 rounded-lg bg-primary-container text-primary flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors" title="Add Node">
-                    <span class="material-symbols-outlined">add_circle</span>
-                </button>
-                <button class="w-10 h-10 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors flex items-center justify-center" title="Add Edge">
-                    <span class="material-symbols-outlined">timeline</span>
-                </button>
-                <button class="w-10 h-10 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors flex items-center justify-center" title="Select">
-                    <span class="material-symbols-outlined">highlight_alt</span>
-                </button>
-                <div class="w-full h-px bg-outline-variant my-1"></div>
-                <button class="w-10 h-10 rounded-lg text-error hover:bg-error-container transition-colors flex items-center justify-center" title="Delete">
-                    <span class="material-symbols-outlined">delete</span>
-                </button>
-            </div>
+        <!-- algo toolbar -->
+        <div id="algoToolbar" style="display:none;">
+          <div class="algo-controls">
+            <button class="btn small active" data-algo="bfs">BFS</button>
+            <button class="btn small" data-algo="dfs">DFS</button>
+            <button class="btn small" data-algo="comp">Componentes conexas</button>
+            <button class="btn small" data-algo="color">Coloreo voraz</button>
+          </div>
+          <div class="algo-controls" style="margin-top:10px;">
+            <button class="btn small" id="pickStartBtn">📍 Elegir vértice inicial</button>
+            <button class="btn small primary" id="runAlgoBtn">▶ Ejecutar</button>
+            <button class="btn small" id="playPauseBtn">⏯ Pausar/Reanudar</button>
+            <button class="btn small" id="stepBtn">⏭ Paso</button>
+            <button class="btn small" id="resetAlgoBtn">↺ Reiniciar</button>
+          </div>
+          <div class="speed-row">velocidad <input type="range" id="speedRange" min="150" max="1600" value="700"> <span id="speedVal">700ms</span></div>
+          <div class="log-box" id="logBox"><div>Elige un algoritmo y pulsa «Ejecutar». Para BFS/DFS primero define un vértice inicial.</div></div>
+        </div>
+      </div>
 
-            <!-- Graph Canvas -->
-            <div class="flex-1 grid-bg relative overflow-hidden bg-[#0a111a] cursor-crosshair">
-                <!-- Simulated Nodes & Edges (Static visual for now) -->
-                <svg class="absolute inset-0 w-full h-full pointer-events-none">
-                    <!-- Edges -->
-                    <line x1="200" y1="200" x2="400" y2="150" stroke="#334155" stroke-width="2"></line>
-                    <line x1="400" y1="150" x2="500" y2="350" stroke="#334155" stroke-width="2"></line>
-                    <line x1="200" y1="200" x2="500" y2="350" stroke="#334155" stroke-width="2"></line>
-                    <line x1="500" y1="350" x2="300" y2="450" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,5" class="animate-pulse"></line>
-                    
-                    <!-- Nodes -->
-                    <circle cx="200" cy="200" r="24" fill="#1e293b" stroke="#334155" stroke-width="2" class="pointer-events-auto cursor-grab"></circle>
-                    <text x="200" y="205" fill="#d4e4fa" text-anchor="middle" font-family="JetBrains Mono" font-size="14" class="">A</text>
+      <div>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-label">Vértices</div><div class="stat-value" id="statN">0</div></div>
+          <div class="stat"><div class="stat-label">Aristas</div><div class="stat-value" id="statM">0</div></div>
+          <div class="stat"><div class="stat-label">¿Conexo?</div><div class="stat-value" id="statConn">—</div></div>
+          <div class="stat"><div class="stat-label">Tipo</div><div class="stat-value" id="statType" style="font-size:14px;">no dirigido</div></div>
+        </div>
 
-                    <circle cx="400" cy="150" r="24" fill="#1e293b" stroke="#334155" stroke-width="2" class="pointer-events-auto cursor-grab"></circle>
-                    <text x="400" y="155" fill="#d4e4fa" text-anchor="middle" font-family="JetBrains Mono" font-size="14" class="">B</text>
+        <div class="lab-card" style="padding:14px;">
+          <div class="panel-tabs">
+            <button class="active" data-panel="list">Lista de adyacencia</button>
+            <button data-panel="matrix">Matriz de adyacencia</button>
+            <button data-panel="degree">Grados</button>
+          </div>
+          <div class="data-panel active" id="panelList"><div class="adj-list" id="adjListBody">—</div></div>
+          <div class="data-panel" id="panelMatrix"><div style="overflow:auto;" id="matrixBody">—</div></div>
+          <div class="data-panel" id="panelDegree"><div class="adj-list" id="degreeBody">—</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                    <circle cx="500" cy="350" r="24" fill="#1e293b" stroke="#3b82f6" stroke-width="2" class="pointer-events-auto cursor-grab filter drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"></circle>
-                    <text x="500" y="355" fill="#d4e4fa" text-anchor="middle" font-family="JetBrains Mono" font-size="14" class="">C</text>
+<!-- ================= RETOS ================= -->
+<section class="section" id="retos">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot" style="background:var(--c1)"></span> 03 · Retos</div>
+      <h2>Demuestra que entendiste</h2>
+      <p>Un cuestionario corto y dos retos prácticos que se verifican directamente sobre el grafo que construiste en el laboratorio.</p>
+    </div>
 
-                    <circle cx="300" cy="450" r="24" fill="#1e293b" stroke="#334155" stroke-width="2" class="pointer-events-auto cursor-grab"></circle>
-                    <text x="300" y="455" fill="#d4e4fa" text-anchor="middle" font-family="JetBrains Mono" font-size="14" class="">D</text>
-                </svg>
+    <div class="score-bar">
+      <span>Cuestionario rápido</span>
+      <span class="num" id="quizScore">0 / 6</span>
+    </div>
+    <div id="quizContainer"></div>
+    <div style="text-align:center; margin:18px 0 56px;"><button class="btn primary" id="checkQuizBtn">Comprobar respuestas</button></div>
 
-                <!-- Coordinates overlay -->
-                <div class="absolute bottom-4 left-4 text-outline font-mono-data text-mono-data bg-surface/80 px-2 py-1 rounded">
-                    X: 420, Y: 350 | Nodes: 4 | Edges: 4
-                </div>
-            </div>
+    <div class="challenge-grid">
+      <div class="challenge-card">
+        <h4>Reto 1 — Construye un grafo bipartito</h4>
+        <p style="color:var(--text-dim); font-size:14px;">Ve al laboratorio, borra el grafo actual y construye uno que creas que es bipartito (mínimo 4 vértices). Vuelve aquí y verifica.</p>
+        <button class="btn small" id="checkBipartiteBtn">Verificar bipartición</button>
+        <div class="result-box" id="bipartiteResult">Esperando verificación…</div>
+      </div>
+      <div class="challenge-card">
+        <h4>Reto 2 — ¿Tu grafo es conexo?</h4>
+        <p style="color:var(--text-dim); font-size:14px;">Usa el grafo que tengas actualmente en el laboratorio (puede ser cualquiera) y verifica cuántas componentes conexas tiene.</p>
+        <button class="btn small" id="checkConnectedBtn">Verificar conectividad</button>
+        <div class="result-box" id="connectedResult">Esperando verificación…</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <!-- Data Structures Panel -->
-            <div class="w-full md:w-96 bg-surface-container-low border-l border-outline-variant flex flex-col h-full shrink-0">
-                <div class="p-4 border-b border-outline-variant bg-surface-container flex justify-between items-center">
-                    <h3 class="font-headline-md text-[16px] text-on-surface">Data Structures</h3>
-                    <button class="text-on-surface-variant hover:text-primary">
-                        <span class="material-symbols-outlined text-[20px]">refresh</span>
-                    </button>
-                </div>
+<footer>
+  Proyecto de Teoría de Grafos · Matemáticas Discretas — construido para aprender jugando con nodos y aristas.
+</footer>
 
-                <div class="flex-1 overflow-y-auto p-4 space-y-6">
-                    
-                    <!-- Adjacency Matrix -->
-                    <div class="bg-surface rounded-lg border border-outline-variant overflow-hidden">
-                        <div class="px-4 py-2 bg-surface-container-highest border-b border-outline-variant flex justify-between items-center">
-                            <span class="font-label-caps text-label-caps text-primary uppercase">Adjacency Matrix</span>
-                        </div>
-                        <div class="p-4 overflow-x-auto">
-                            <table class="w-full text-center font-mono-data text-mono-data border-collapse">
-                                <thead>
-                                    <tr class="text-outline">
-                                        <th class="p-2 border-b border-r border-outline-variant/30"></th>
-                                        <th class="p-2 border-b border-outline-variant/30">A</th>
-                                        <th class="p-2 border-b border-outline-variant/30">B</th>
-                                        <th class="p-2 border-b border-outline-variant/30 text-primary">C</th>
-                                        <th class="p-2 border-b border-outline-variant/30">D</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="p-2 border-r border-outline-variant/30 text-outline">A</td>
-                                        <td class="p-2 text-on-surface-variant matrix-cell">0</td>
-                                        <td class="p-2 text-secondary matrix-cell">1</td>
-                                        <td class="p-2 text-secondary matrix-cell">1</td>
-                                        <td class="p-2 text-on-surface-variant matrix-cell">0</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="p-2 border-r border-outline-variant/30 text-outline">B</td>
-                                        <td class="p-2 text-secondary matrix-cell">1</td>
-                                        <td class="p-2 text-on-surface-variant matrix-cell">0</td>
-                                        <td class="p-2 text-secondary matrix-cell">1</td>
-                                        <td class="p-2 text-on-surface-variant matrix-cell">0</td>
-                                    </tr>
-                                    <tr class="bg-primary-container/20">
-                                        <td class="p-2 border-r border-outline-variant/30 text-primary">C</td>
-                                        <td class="p-2 text-secondary matrix-cell">1</td>
-                                        <td class="p-2 text-secondary matrix-cell">1</td>
-                                        <td class="p-2 text-on-surface-variant matrix-cell">0</td>
-                                        <td class="p-2 text-secondary font-bold matrix-cell border border-primary/50">1</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="p-2 border-r border-outline-variant/30 text-outline">D</td>
-                                        <td class="p-2 text-on-surface-variant matrix-cell">0</td>
-                                        <td class="p-2 text-on-surface-variant matrix-cell">0</td>
-                                        <td class="p-2 text-secondary matrix-cell">1</td>
-                                        <td class="p-2 text-on-surface-variant matrix-cell">0</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Adjacency List -->
-                    <div class="bg-surface rounded-lg border border-outline-variant overflow-hidden">
-                        <div class="px-4 py-2 bg-surface-container-highest border-b border-outline-variant">
-                            <span class="font-label-caps text-label-caps text-primary uppercase">Adjacency List</span>
-                        </div>
-                        <div class="p-4 font-mono-code text-mono-code text-on-surface-variant">
-                            <div class="flex items-start mb-2 group">
-                                <span class="text-tertiary w-6">A:</span>
-                                <span class="">[ B, C ]</span>
-                            </div>
-                            <div class="flex items-start mb-2 group">
-                                <span class="text-tertiary w-6">B:</span>
-                                <span class="">[ A, C ]</span>
-                            </div>
-                            <div class="flex items-start mb-2 bg-primary-container/20 p-1 -ml-1 rounded border border-primary/30">
-                                </div></div></div></div></div></main></div></body></html>
+<script src="js/script.js"></script>
+</body>
+</html>

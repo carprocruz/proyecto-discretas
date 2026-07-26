@@ -529,43 +529,74 @@ document.getElementById('runAlgoBtn').addEventListener('click', ()=>{
   }
 });
 
-/* ============================================================
-   RETOS — cuestionario
-   ============================================================ */
-const QUIZ = [
+const BANCO_PREGUNTAS = [
   { q:'¿Cuál es el número mínimo de aristas de un árbol con 7 vértices?', opts:['5','6','7','14'], correct:1, ex:'Un árbol siempre tiene exactamente n − 1 aristas: 7 − 1 = 6.' },
   { q:'En un grafo dirigido, ¿qué representa una arista (A, B)?', opts:['Conexión en ambos sentidos','Conexión solo de A hacia B','Que A y B tienen el mismo grado','Un ciclo entre A y B'], correct:1, ex:'En grafos dirigidos, la arista solo se recorre en el sentido en que está definida.' },
   { q:'¿Qué estructura de datos usa el BFS para decidir el orden de visita?', opts:['Una pila (LIFO)','Una cola (FIFO)','Un árbol binario','Una matriz'], correct:1, ex:'BFS usa una cola: primero en entrar, primero en salir, lo que garantiza explorar por niveles.' },
   { q:'Un grafo es bipartito si...', opts:['Tiene exactamente dos vértices','Sus vértices se pueden dividir en dos grupos donde toda arista va entre grupos','No tiene ciclos','Es siempre conexo'], correct:1, ex:'La condición clave es que ninguna arista una a dos vértices del mismo grupo.' },
   { q:'El número cromático de un grafo es...', opts:['El número de vértices','El número de aristas','La cantidad mínima de colores necesarios para colorearlo sin conflictos','El grado máximo del grafo'], correct:2, ex:'Es la menor cantidad de colores con la que se puede colorear el grafo respetando la regla de coloreo.' },
   { q:'¿Qué garantiza el algoritmo de coloreo voraz (greedy)?', opts:['Siempre encuentra el número cromático exacto','Da una cota superior, no siempre el valor mínimo exacto','Solo funciona en árboles','Requiere que el grafo sea dirigido'], correct:1, ex:'El greedy es rápido pero no óptimo en general: puede usar más colores de los estrictamente necesarios.' },
+  { q:'La suma de los grados de todos los vértices de un grafo no dirigido es igual a...', opts:['El número de vértices','El doble del número de aristas','El número de aristas al cuadrado','Cero'], correct:1, ex:'Por el Lema del apretón de manos, cada arista aporta 2 al grado total del grafo.' },
+  { q:'¿Cuál es el número máximo de aristas en un grafo simple no dirigido de 5 vértices?', opts:['5','10','20','25'], correct:1, ex:'Un grafo completo de n vértices tiene n(n-1)/2 aristas. Para 5 vértices, es 5*4/2 = 10.' },
+  { q:'Si un grafo conexo tiene n vértices y n aristas, necesariamente contiene...', opts:['Al menos un ciclo','Ningún ciclo','Exactamente dos componentes','Un camino euleriano'], correct:0, ex:'Un árbol (sin ciclos) tiene n-1 aristas. Al agregar una arista más, se forma obligatoriamente un ciclo.' },
+  { q:'¿En qué consiste un camino Euleriano?', opts:['Pasa por todos los vértices exactamente una vez','Pasa por todas las aristas exactamente una vez','El vértice inicial es igual al final','Tiene peso mínimo'], correct:1, ex:'Un camino Euleriano recorre cada arista del grafo exactamente una vez.' },
+  { q:'¿En qué consiste un ciclo Hamiltoniano?', opts:['Pasa por todas las aristas exactamente una vez','Es un ciclo que pasa por todos los vértices exactamente una vez y vuelve al inicio','No tiene vértices repetidos pero no incluye todos','Es un árbol de expansión mínima'], correct:1, ex:'A diferencia del Euleriano que se centra en las aristas, el Hamiltoniano debe visitar todos los vértices.' },
+  { q:'En un grafo completo K4, ¿cuál es el grado de cada vértice?', opts:['2','3','4','12'], correct:1, ex:'En un grafo completo, cada vértice está conectado a todos los demás, por lo que su grado es n-1 (4-1 = 3).' }
 ];
+
+// 2. Función para desordenar y extraer aleatoriamente
+function obtenerPreguntasAleatorias(banco, cantidad) {
+  const copia = [...banco];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia.slice(0, cantidad);
+}
+
+// 3. Generar el cuestionario actual (6 preguntas al azar)
+const QUIZ = obtenerPreguntasAleatorias(BANCO_PREGUNTAS, 6);
+
+// 4. Inyección en el DOM
 const quizContainer = document.getElementById('quizContainer');
-QUIZ.forEach((item,qi)=>{
+quizContainer.innerHTML = ''; // Limpiamos contenedor por seguridad
+
+QUIZ.forEach((item, qi) => {
   const card = document.createElement('div');
-  card.className='quiz-card';
+  card.className = 'quiz-card';
   card.innerHTML = `<h4>${qi+1}. ${item.q}</h4>` +
-    item.opts.map((o,oi)=>`<label class="opt" data-q="${qi}" data-o="${oi}"><input type="radio" name="q${qi}" value="${oi}"> ${o}</label>`).join('') +
+    item.opts.map((o, oi) => `<label class="opt" data-q="${qi}" data-o="${oi}"><input type="radio" name="q${qi}" value="${oi}"> ${o}</label>`).join('') +
     `<div class="explain" id="ex-${qi}">${item.ex}</div>`;
   quizContainer.appendChild(card);
 });
-document.getElementById('checkQuizBtn').addEventListener('click', ()=>{
-  let score=0;
-  QUIZ.forEach((item,qi)=>{
+
+// 5. Validación del puntaje
+// Para evitar duplicar eventos si este código se ejecuta múltiples veces, 
+// puedes clonar y reemplazar el botón (opcional, pero buena práctica)
+const oldBtn = document.getElementById('checkQuizBtn');
+const newBtn = oldBtn.cloneNode(true);
+oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+
+newBtn.addEventListener('click', () => {
+  let score = 0;
+  QUIZ.forEach((item, qi) => {
     const checked = document.querySelector(`input[name="q${qi}"]:checked`);
-    document.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(el=>el.classList.remove('correct','wrong'));
+    document.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(el => el.classList.remove('correct', 'wrong'));
     const correctEl = document.querySelector(`.opt[data-q="${qi}"][data-o="${item.correct}"]`);
-    if(checked){
+    
+    if (checked) {
       const val = Number(checked.value);
-      if(val===item.correct){ score++; correctEl.classList.add('correct'); }
-      else {
+      if (val === item.correct) { 
+        score++; 
+        correctEl.classList.add('correct'); 
+      } else {
         document.querySelector(`.opt[data-q="${qi}"][data-o="${val}"]`).classList.add('wrong');
         correctEl.classList.add('correct');
       }
     } else {
       correctEl.classList.add('correct');
     }
-    document.getElementById('ex-'+qi).classList.add('show');
+    document.getElementById('ex-' + qi).classList.add('show');
   });
   document.getElementById('quizScore').textContent = `${score} / ${QUIZ.length}`;
 });
