@@ -94,10 +94,10 @@ nav{
   background:#10131acc;
   border-bottom:1px solid var(--line);
 }
-.navrow{max-width:var(--maxw); margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px;}
+.navrow{max-width:var(--maxw); margin:0 auto; padding:6px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px;}
 .brand{display:flex; align-items:center; gap:0; font-family:'Space Grotesk',sans-serif; font-weight:700;}
 .brand-mark{
-  width:54px; height:54px; flex:0 0 54px;
+  width:150px; height:82px; flex:0 0 150px;
   border-radius:14px;
   object-fit:contain;
   padding:0;
