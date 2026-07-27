@@ -32,6 +32,7 @@ window.MathJax = {
       <a href="#teoria">Teoria</a>
       <a href="#laboratorio">Laboratorio</a>
       <a href="#retos">Retos</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">☀️</button>
     </div>
   </div>
 </nav>
@@ -85,12 +86,39 @@ window.MathJax = {
             <p>Un grafo se describe como un par ordenado $G=(V,E)$, donde $V$ es el conjunto de vértices y $E$ es el conjunto de aristas que unen pares de vértices.</p>
             <div class="formula-block">$$G=(V,E)$$</div>
             <p class="theory-example"><strong>Ejemplo:</strong> Si $V=\{A,B,C\}$ y $E=\{(A,B),(B,C)\}$, tenemos un camino de 3 vértices.</p>
+            <div class="theory-diagram">
+              <svg width="220" height="100" viewBox="0 0 220 100">
+                <line x1="40" y1="50" x2="110" y2="50" stroke="#4fd6ca" stroke-width="2"/>
+                <line x1="110" y1="50" x2="180" y2="50" stroke="#4fd6ca" stroke-width="2"/>
+                <circle cx="40" cy="50" r="18" fill="#ff6b5b"/>
+                <circle cx="110" cy="50" r="18" fill="#ffbe4d"/>
+                <circle cx="180" cy="50" r="18" fill="#a293ff"/>
+                <text x="40" y="55" text-anchor="middle" fill="#101319" font-size="14" font-weight="600" font-family="Space Grotesk">A</text>
+                <text x="110" y="55" text-anchor="middle" fill="#101319" font-size="14" font-weight="600" font-family="Space Grotesk">B</text>
+                <text x="180" y="55" text-anchor="middle" fill="#101319" font-size="14" font-weight="600" font-family="Space Grotesk">C</text>
+              </svg>
+              <div class="caption">Grafo simple: $G=(\{A,B,C\},\{(A,B),(B,C)\})$</div>
+            </div>
           </article>
           <article class="theory-item">
             <h4>Digrafo</h4>
             <p>Cuando cada arista tiene orientación, el objeto se interpreta como un digrafo. En ese caso, las aristas se leen como pares ordenados y se distingue el sentido de recorrido.</p>
             <div class="formula-block">$$e=(u,v) \neq (v,u)$$</div>
             <p class="theory-example"><strong>Ejemplo:</strong> En una red social, si A sigue a B pero B no sigue a A, la relación es dirigida: $(A,B)$ existe pero $(B,A)$ no.</p>
+            <div class="theory-diagram">
+              <svg width="220" height="100" viewBox="0 0 220 100">
+                <defs><marker id="ah1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4fd6ca"/></marker></defs>
+                <line x1="58" y1="50" x2="92" y2="50" stroke="#4fd6ca" stroke-width="2" marker-end="url(#ah1)"/>
+                <line x1="128" y1="50" x2="162" y2="50" stroke="#4fd6ca" stroke-width="2" marker-end="url(#ah1)"/>
+                <circle cx="40" cy="50" r="18" fill="#ff6b5b"/>
+                <circle cx="110" cy="50" r="18" fill="#ffbe4d"/>
+                <circle cx="180" cy="50" r="18" fill="#a293ff"/>
+                <text x="40" y="55" text-anchor="middle" fill="#101319" font-size="14" font-weight="600" font-family="Space Grotesk">A</text>
+                <text x="110" y="55" text-anchor="middle" fill="#101319" font-size="14" font-weight="600" font-family="Space Grotesk">B</text>
+                <text x="180" y="55" text-anchor="middle" fill="#101319" font-size="14" font-weight="600" font-family="Space Grotesk">C</text>
+              </svg>
+              <div class="caption">Digrafo: $(A,B)$ y $(B,C)$ existen, pero $(B,A)$ no</div>
+            </div>
           </article>
           <article class="theory-item">
             <h4>Subgrafo</h4>
@@ -144,6 +172,22 @@ window.MathJax = {
             <p>Un camino es una sucesión de vértices conectados uno tras otro, sin repetir vértices. Si el recorrido regresa al vértice inicial, la secuencia se convierte en un ciclo.</p>
             <div class="formula-block">$$\text{Camino: } P=(v_0,v_1,\dots,v_k), \qquad \text{Ciclo: } C=(v_0,\dots,v_k,v_0)$$</div>
             <p class="theory-example"><strong>Ejemplo:</strong> En un grafo con vértices $\{A,B,C,D\}$ y aristas $\{(A,B),(B,C),(C,D)\}$, el camino $A\to B\to C\to D$ tiene longitud 3.</p>
+            <div class="theory-diagram">
+              <svg width="280" height="100" viewBox="0 0 280 100">
+                <line x1="36" y1="50" x2="94" y2="50" stroke="#4fd6ca" stroke-width="2"/>
+                <line x1="116" y1="50" x2="174" y2="50" stroke="#4fd6ca" stroke-width="2"/>
+                <line x1="196" y1="50" x2="254" y2="50" stroke="#4fd6ca" stroke-width="2"/>
+                <circle cx="28" cy="50" r="16" fill="#ff6b5b"/>
+                <circle cx="102" cy="50" r="16" fill="#ffbe4d"/>
+                <circle cx="188" cy="50" r="16" fill="#4fd6ca"/>
+                <circle cx="262" cy="50" r="16" fill="#a293ff"/>
+                <text x="28" y="55" text-anchor="middle" fill="#101319" font-size="13" font-weight="600" font-family="Space Grotesk">A</text>
+                <text x="102" y="55" text-anchor="middle" fill="#101319" font-size="13" font-weight="600" font-family="Space Grotesk">B</text>
+                <text x="188" y="55" text-anchor="middle" fill="#101319" font-size="13" font-weight="600" font-family="Space Grotesk">C</text>
+                <text x="262" y="55" text-anchor="middle" fill="#101319" font-size="13" font-weight="600" font-family="Space Grotesk">D</text>
+              </svg>
+              <div class="caption">Camino $A \to B \to C \to D$ (longitud 3)</div>
+            </div>
           </article>
           <article class="theory-item">
             <h4>Conectividad</h4>
@@ -162,12 +206,52 @@ window.MathJax = {
             <p>Todo par de vértices está unido por una arista. En un grafo completo con <em>n</em> vértices, la cantidad de aristas se obtiene directamente de la combinación de pares.</p>
             <div class="formula-block">$$K_n:\quad |E| = \frac{n(n-1)}{2}$$</div>
             <p class="theory-example"><strong>Ejemplo:</strong> $K_4$ tiene $\frac{4 \cdot 3}{2} = 6$ aristas y cada vértice tiene grado 3.</p>
+            <div class="theory-diagram">
+              <svg width="200" height="180" viewBox="0 0 200 180">
+                <line x1="100" y1="20" x2="30" y2="90" stroke="#4fd6ca55" stroke-width="1.5"/>
+                <line x1="100" y1="20" x2="170" y2="90" stroke="#4fd6ca55" stroke-width="1.5"/>
+                <line x1="100" y1="20" x2="100" y2="160" stroke="#4fd6ca55" stroke-width="1.5"/>
+                <line x1="30" y1="90" x2="170" y2="90" stroke="#4fd6ca55" stroke-width="1.5"/>
+                <line x1="30" y1="90" x2="100" y2="160" stroke="#4fd6ca55" stroke-width="1.5"/>
+                <line x1="170" y1="90" x2="100" y2="160" stroke="#4fd6ca55" stroke-width="1.5"/>
+                <circle cx="100" cy="20" r="16" fill="#ff6b5b"/>
+                <circle cx="30" cy="90" r="16" fill="#ffbe4d"/>
+                <circle cx="170" cy="90" r="16" fill="#4fd6ca"/>
+                <circle cx="100" cy="160" r="16" fill="#a293ff"/>
+                <text x="100" y="25" text-anchor="middle" fill="#101319" font-size="13" font-weight="600" font-family="Space Grotesk">1</text>
+                <text x="30" y="95" text-anchor="middle" fill="#101319" font-size="13" font-weight="600" font-family="Space Grotesk">2</text>
+                <text x="170" y="95" text-anchor="middle" fill="#101319" font-size="13" font-weight="600" font-family="Space Grotesk">3</text>
+                <text x="100" y="165" text-anchor="middle" fill="#101319" font-size="13" font-weight="600" font-family="Space Grotesk">4</text>
+              </svg>
+              <div class="caption">$K_4$: 4 vértices, 6 aristas, cada grado = 3</div>
+            </div>
           </article>
           <article class="theory-item">
             <h4>Grafo bipartito</h4>
             <p>Los vértices se dividen en dos conjuntos y toda arista une un vértice de un conjunto con uno del otro. No aparecen aristas dentro del mismo conjunto.</p>
             <div class="formula-block">$$V=X\cup Y,\qquad X\cap Y=\varnothing$$</div>
             <p class="theory-example"><strong>Teorema:</strong> Un grafo es bipartito si y solo si no contiene ciclos de longitud impar.</p>
+            <div class="theory-diagram">
+              <svg width="240" height="120" viewBox="0 0 240 120">
+                <rect x="10" y="10" width="80" height="100" rx="8" fill="#ff6b5b10" stroke="#ff6b5b33" stroke-width="1"/>
+                <rect x="150" y="10" width="80" height="100" rx="8" fill="#4fd6ca10" stroke="#4fd6ca33" stroke-width="1"/>
+                <text x="50" y="105" text-anchor="middle" fill="#ff6b5b" font-size="11" font-family="JetBrains Mono">X</text>
+                <text x="190" y="105" text-anchor="middle" fill="#4fd6ca" font-size="11" font-family="JetBrains Mono">Y</text>
+                <line x1="50" y1="36" x2="190" y2="36" stroke="#ffffff33" stroke-width="1.5"/>
+                <line x1="50" y1="36" x2="190" y2="68" stroke="#ffffff33" stroke-width="1.5"/>
+                <line x1="50" y1="68" x2="190" y2="36" stroke="#ffffff33" stroke-width="1.5"/>
+                <line x1="50" y1="68" x2="190" y2="68" stroke="#ffffff33" stroke-width="1.5"/>
+                <circle cx="50" cy="36" r="14" fill="#ff6b5b"/>
+                <circle cx="50" cy="68" r="14" fill="#ffbe4d"/>
+                <circle cx="190" cy="36" r="14" fill="#4fd6ca"/>
+                <circle cx="190" cy="68" r="14" fill="#a293ff"/>
+                <text x="50" y="41" text-anchor="middle" fill="#101319" font-size="12" font-weight="600" font-family="Space Grotesk">A</text>
+                <text x="50" y="73" text-anchor="middle" fill="#101319" font-size="12" font-weight="600" font-family="Space Grotesk">B</text>
+                <text x="190" y="41" text-anchor="middle" fill="#101319" font-size="12" font-weight="600" font-family="Space Grotesk">C</text>
+                <text x="190" y="73" text-anchor="middle" fill="#101319" font-size="12" font-weight="600" font-family="Space Grotesk">D</text>
+              </svg>
+              <div class="caption">Grafo bipartito: todas las aristas van de $X$ a $Y$</div>
+            </div>
           </article>
           <article class="theory-item">
             <h4>Grafo planar</h4>
@@ -187,6 +271,24 @@ window.MathJax = {
             <p>Un árbol es un grafo conexo sin ciclos. Si tiene <em>n</em> vértices, entonces presenta exactamente <em>n-1</em> aristas.</p>
             <div class="formula-block">$$|E| = |V| - 1$$</div>
             <p class="theory-example"><strong>Equivalentes:</strong> Las siguientes condiciones son equivalentes para un grafo con $n$ vértices: (1) es un árbol, (2) es conexo y tiene $n-1$ aristas, (3) no tiene ciclos y tiene $n-1$ aristas.</p>
+            <div class="theory-diagram">
+              <svg width="240" height="140" viewBox="0 0 240 140">
+                <line x1="120" y1="24" x2="60" y2="74" stroke="#4fd6ca" stroke-width="2"/>
+                <line x1="120" y1="24" x2="180" y2="74" stroke="#4fd6ca" stroke-width="2"/>
+                <line x1="60" y1="74" x2="30" y2="124" stroke="#4fd6ca" stroke-width="2"/>
+                <line x1="60" y1="74" x2="90" y2="124" stroke="#4fd6ca" stroke-width="2"/>
+                <line x1="180" y1="74" x2="150" y2="124" stroke="#4fd6ca" stroke-width="2"/>
+                <line x1="180" y1="74" x2="210" y2="124" stroke="#4fd6ca" stroke-width="2"/>
+                <circle cx="120" cy="24" r="16" fill="#ff6b5b"/>
+                <circle cx="60" cy="74" r="16" fill="#ffbe4d"/>
+                <circle cx="180" cy="74" r="16" fill="#4fd6ca"/>
+                <circle cx="30" cy="124" r="14" fill="#a293ff"/>
+                <circle cx="90" cy="124" r="14" fill="#a293ff"/>
+                <circle cx="150" cy="124" r="14" fill="#ff6b5b"/>
+                <circle cx="210" cy="124" r="14" fill="#ffbe4d"/>
+              </svg>
+              <div class="caption">Árbol: 7 vértices, 6 aristas, sin ciclos</div>
+            </div>
           </article>
           <article class="theory-item">
             <h4>Bosque</h4>
