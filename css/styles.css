@@ -315,6 +315,15 @@ mjx-container{max-width:100%;}
   color:var(--text);
   font-family:'JetBrains Mono',monospace;
 }
+.theory-example{
+  margin-top:10px;
+  padding:8px 12px;
+  background:#ffffff06;
+  border-radius:8px;
+  font-size:14px;
+  color:var(--text-dim);
+}
+.theory-example strong{color:var(--text);}
 
 /* ---------- LAB ---------- */
 .lab-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:22px; align-items:start;}

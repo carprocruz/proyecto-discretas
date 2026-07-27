@@ -66,138 +66,184 @@ window.MathJax = {
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow"><span class="dot"></span> 01 · Fundamentos</div>
-      <h2>La teoria, con notacion clara y ecuaciones visibles</h2>
-      <p>Los contenidos del capitulo de grafos y arboles estan reorganizados para que las definiciones se lean mejor y las expresiones matematicas aparezcan como bloques, no como texto plano.</p>
+      <h2>La teoría, con notación clara y ecuaciones visibles</h2>
+      <p>Los contenidos del capítulo de grafos y árboles están reorganizados para que las definiciones se lean mejor y las expresiones matemáticas aparezcan como bloques, no como texto plano.</p>
     </div>
 
     <div class="theory-note theory-note--wide">
-      <strong>Notacion base:</strong> trabajamos con $G=(V,E)$, con $\vert V\vert = n$ y $\vert E\vert = m$. Las ideas de adyacencia, grado, caminos y coloracion se escriben con la misma simbologia en toda la seccion.
+      <strong>Notación base:</strong> trabajamos con $G=(V,E)$, con $|V| = n$ y $|E| = m$. Las ideas de adyacencia, grado, caminos y coloreo se escriben con la misma simbología en toda la sección.
     </div>
 
     <div class="theory-stack">
+
+      <!-- ===== DEFINICIONES ===== -->
       <details class="theory-section" open>
         <summary>Definiciones</summary>
         <div class="theory-section-body">
           <article class="theory-item">
             <h4>Grafo</h4>
-            <p>Un grafo se describe como un par ordenado $G=(V,E)$, donde $V$ es el conjunto de vertices y $E$ es el conjunto de aristas que unen pares de vertices.</p>
+            <p>Un grafo se describe como un par ordenado $G=(V,E)$, donde $V$ es el conjunto de vértices y $E$ es el conjunto de aristas que unen pares de vértices.</p>
             <div class="formula-block">$$G=(V,E)$$</div>
+            <p class="theory-example"><strong>Ejemplo:</strong> Si $V=\{A,B,C\}$ y $E=\{(A,B),(B,C)\}$, tenemos un camino de 3 vértices.</p>
           </article>
           <article class="theory-item">
             <h4>Digrafo</h4>
-            <p>Cuando cada arista tiene orientacion, el objeto se interpreta como un digrafo. En ese caso, las aristas se leen como pares ordenados y se distingue el sentido de recorrido.</p>
-            <div class="formula-block">$$e=(u,v)$$</div>
+            <p>Cuando cada arista tiene orientación, el objeto se interpreta como un digrafo. En ese caso, las aristas se leen como pares ordenados y se distingue el sentido de recorrido.</p>
+            <div class="formula-block">$$e=(u,v) \neq (v,u)$$</div>
+            <p class="theory-example"><strong>Ejemplo:</strong> En una red social, si A sigue a B pero B no sigue a A, la relación es dirigida: $(A,B)$ existe pero $(B,A)$ no.</p>
           </article>
           <article class="theory-item">
             <h4>Subgrafo</h4>
-            <p>Si un grafo conserva solo una parte de sus vertices y aristas, obtenemos un subgrafo. Formalmente, $H=(W,F)$ con $W\subseteq V$ y $F\subseteq E$.</p>
+            <p>Si un grafo conserva solo una parte de sus vértices y aristas, obtenemos un subgrafo. Formalmente, $H=(W,F)$ con $W\subseteq V$ y $F\subseteq E$.</p>
             <div class="formula-block">$$H=(W,F),\qquad W\subseteq V,\;F\subseteq E$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Grafo simple vs multigrafo</h4>
+            <p>Un grafo simple no permite aristas múltiples entre el mismo par de vértices ni loops (aristas de un vértice a sí mismo). Si se permiten aristas múltiples, se llama multigrafo.</p>
           </article>
         </div>
       </details>
 
+      <!-- ===== REPRESENTACIÓN ===== -->
       <details class="theory-section">
-        <summary>Representacion</summary>
+        <summary>Representación</summary>
         <div class="theory-section-body">
           <article class="theory-item">
             <h4>Lista de adyacencia</h4>
-            <p>Para cada vertice se guarda la lista de vertices con los que comparte una arista. Es una representacion compacta y muy util cuando el grafo es disperso.</p>
-            <p class="inline-sample">A: [B, C]</p>
+            <p>Para cada vértice se guarda la lista de vértices con los que comparte una arista. Es una representación compacta y muy útil cuando el grafo es disperso.</p>
+            <p class="inline-sample">A: [B, C]&ensp; B: [A]&ensp; C: [A]</p>
+            <p class="theory-example"><strong>Ejemplo:</strong> En un grafo con 1000 vértices y solo 500 aristas, la lista de adyacencia guarda mucho menos que una matriz de 1000×1000.</p>
           </article>
           <article class="theory-item">
             <h4>Matriz de adyacencia</h4>
-            <p>La informacion se organiza en una tabla cuadrada donde la entrada $(i,j)$ indica si existe o no una arista entre esos vertices.</p>
+            <p>La información se organiza en una tabla cuadrada donde la entrada $(i,j)$ indica si existe o no una arista entre esos vértices.</p>
             <div class="formula-block">$$a_{ij}=\begin{cases}1,& \text{si }(v_i,v_j)\in E\\0,& \text{si no}\end{cases}$$</div>
+            <p class="theory-example"><strong>Ejemplo:</strong> Para un grafo completo $K_3$, la matriz es toda 1s excepto la diagonal.</p>
           </article>
           <article class="theory-item">
             <h4>Matriz de incidencia</h4>
-            <p>Relaciona vertices con aristas y marca cuando un vertice es extremo de una arista. Es especialmente util para seguir la estructura del grafo sin perder las conexiones individuales.</p>
-            <div class="formula-block">$$b_{ij}$$</div>
+            <p>Relaciona vértices con aristas: cada columna es una arista y marca con 1 los vértices que son extremo de esa arista.</p>
+            <div class="formula-block">$$b_{ij}=\begin{cases}1,& \text{si el vértice }v_i\text{ es extremo de la arista }e_j\\0,& \text{si no}\end{cases}$$</div>
           </article>
         </div>
       </details>
 
+      <!-- ===== PROPIEDADES ===== -->
       <details class="theory-section">
         <summary>Propiedades</summary>
         <div class="theory-section-body">
           <article class="theory-item">
-            <h4>Grado de un vertice</h4>
-            <p>El grado cuenta cuantas aristas inciden en un vertice. En grafos dirigidos se diferencia entre grado de entrada y grado de salida.</p>
-            <div class="formula-block">$$d(v)=\lvert N(v)\rvert$$</div>
+            <h4>Grado de un vértice</h4>
+            <p>El grado cuenta cuántas aristas inciden en un vértice. En grafos dirigidos se diferencia entre grado de entrada $d^-(v)$ y grado de salida $d^+(v)$.</p>
+            <div class="formula-block">$$d(v)=|N(v)|$$</div>
+            <p class="theory-example"><strong>Lema del apretón de manos:</strong> La suma de los grados de todos los vértices es siempre par, porque cada arista aporta exactamente 2 al total:</p>
+            <div class="formula-block">$$\sum_{v \in V} d(v) = 2|E|$$</div>
           </article>
           <article class="theory-item">
             <h4>Camino y ciclo</h4>
-            <p>Un camino es una sucesion de vertices conectados uno tras otro. Si el recorrido regresa al vertice inicial, la secuencia se convierte en un ciclo.</p>
-            <div class="formula-block">$$P=(v_0,v_1,\dots,v_k),\qquad C=(v_0,\dots,v_k,v_0)$$</div>
+            <p>Un camino es una sucesión de vértices conectados uno tras otro, sin repetir vértices. Si el recorrido regresa al vértice inicial, la secuencia se convierte en un ciclo.</p>
+            <div class="formula-block">$$\text{Camino: } P=(v_0,v_1,\dots,v_k), \qquad \text{Ciclo: } C=(v_0,\dots,v_k,v_0)$$</div>
+            <p class="theory-example"><strong>Ejemplo:</strong> En un grafo con vértices $\{A,B,C,D\}$ y aristas $\{(A,B),(B,C),(C,D)\}$, el camino $A\to B\to C\to D$ tiene longitud 3.</p>
           </article>
           <article class="theory-item">
             <h4>Conectividad</h4>
-            <p>Un grafo es conexo cuando cualquier par de vertices puede enlazarse por un camino. Si no ocurre, el grafo se separa en componentes conexas.</p>
-            <div class="formula-block">$$G\text{ conexo} \iff \forall u,v\in V,\; \exists\;\text{camino entre }u\text{ y }v$$</div>
+            <p>Un grafo es conexo cuando cualquier par de vértices puede enlazarse por un camino. Si no ocurre, el grafo se separa en componentes conexas.</p>
+            <div class="formula-block">$$G\text{ conexo} \iff \forall\, u,v\in V,\; \exists\;\text{camino entre }u\text{ y }v$$</div>
           </article>
         </div>
       </details>
 
+      <!-- ===== GRAFOS ESPECIALES ===== -->
       <details class="theory-section">
         <summary>Grafos especiales</summary>
         <div class="theory-section-body">
           <article class="theory-item">
             <h4>Grafo completo</h4>
-            <p>Todo par de vertices esta unido por una arista. En un grafo completo con <em>n</em> vertices, la cantidad de aristas se obtiene directamente de la combinacion de pares.</p>
-            <div class="formula-block">$$\lvert E\rvert = \frac{n(n-1)}{2}$$</div>
+            <p>Todo par de vértices está unido por una arista. En un grafo completo con <em>n</em> vértices, la cantidad de aristas se obtiene directamente de la combinación de pares.</p>
+            <div class="formula-block">$$K_n:\quad |E| = \frac{n(n-1)}{2}$$</div>
+            <p class="theory-example"><strong>Ejemplo:</strong> $K_4$ tiene $\frac{4 \cdot 3}{2} = 6$ aristas y cada vértice tiene grado 3.</p>
           </article>
           <article class="theory-item">
             <h4>Grafo bipartito</h4>
-            <p>Los vertices se dividen en dos conjuntos y toda arista une un vertice de un conjunto con uno del otro. No aparecen aristas dentro del mismo conjunto.</p>
+            <p>Los vértices se dividen en dos conjuntos y toda arista une un vértice de un conjunto con uno del otro. No aparecen aristas dentro del mismo conjunto.</p>
             <div class="formula-block">$$V=X\cup Y,\qquad X\cap Y=\varnothing$$</div>
+            <p class="theory-example"><strong>Teorema:</strong> Un grafo es bipartito si y solo si no contiene ciclos de longitud impar.</p>
           </article>
           <article class="theory-item">
             <h4>Grafo planar</h4>
-            <p>Puede dibujarse en el plano sin cruces entre aristas. Esa propiedad permite estudiar caras, regiones y relaciones topologicas del dibujo.</p>
-            <div class="formula-block">$$v-e+f=2$$</div>
+            <p>Puede dibujarse en el plano sin cruces entre aristas. Esa propiedad permite estudiar caras, regiones y relaciones topológicas del dibujo.</p>
+            <div class="formula-block">$$|V| - |E| + |F| = 2$$</div>
+            <p class="theory-example"><strong>Ejemplo:</strong> Un cubo tiene 8 vértices, 12 aristas y 6 caras: $8 - 12 + 6 = 2$.</p>
           </article>
         </div>
       </details>
 
+      <!-- ===== ÁRBOLES ===== -->
       <details class="theory-section">
-        <summary>Arboles</summary>
+        <summary>Árboles</summary>
         <div class="theory-section-body">
           <article class="theory-item">
-            <h4>Arbol</h4>
-            <p>Un arbol es un grafo conexo sin ciclos. Si tiene <em>n</em> vertices, entonces presenta exactamente <em>n-1</em> aristas.</p>
-            <div class="formula-block">$$\lvert E\rvert = \lvert V\rvert - 1$$</div>
+            <h4>Árbol</h4>
+            <p>Un árbol es un grafo conexo sin ciclos. Si tiene <em>n</em> vértices, entonces presenta exactamente <em>n-1</em> aristas.</p>
+            <div class="formula-block">$$|E| = |V| - 1$$</div>
+            <p class="theory-example"><strong>Equivalentes:</strong> Las siguientes condiciones son equivalentes para un grafo con $n$ vértices: (1) es un árbol, (2) es conexo y tiene $n-1$ aristas, (3) no tiene ciclos y tiene $n-1$ aristas.</p>
           </article>
           <article class="theory-item">
             <h4>Bosque</h4>
-            <p>Un bosque es una coleccion de arboles desconectados entre si. Cada componente del bosque es un arbol por separado.</p>
+            <p>Un bosque es una colección de árboles desconectados entre sí. Cada componente del bosque es un árbol por separado.</p>
             <div class="formula-block">$$F=T_1\cup T_2\cup \cdots \cup T_k$$</div>
           </article>
           <article class="theory-item">
-            <h4>Arbol generador</h4>
-            <p>Si de un grafo conexo se conserva la conectividad usando la menor cantidad posible de aristas, se obtiene un arbol generador o spanning tree.</p>
+            <h4>Árbol generador (spanning tree)</h4>
+            <p>Dado un grafo conexo, un árbol generador conserva todos los vértices pero usa solo $|V|-1$ aristas, manteniendo la conectividad con el menor costo posible.</p>
+            <div class="formula-block">$$T=(V, E'), \qquad E' \subseteq E, \qquad |E'|=|V|-1$$</div>
+            <p class="theory-example"><strong>Algoritmo de Kruskal:</strong> Ordena las aristas por peso de menor a mayor. Agrega cada arista si no forma un ciclo. Detente cuando tengas $|V|-1$ aristas.</p>
           </article>
         </div>
       </details>
 
+      <!-- ===== CAMINOS ESPECIALES ===== -->
       <details class="theory-section">
-        <summary>Coloracion</summary>
+        <summary>Caminos especiales</summary>
         <div class="theory-section-body">
           <article class="theory-item">
-            <h4>Coloracion propia</h4>
-            <p>Asignamos colores a los vertices de forma que dos vertices adyacentes nunca compartan color.</p>
-            <div class="formula-block">$$c:V\to\{1,2,\dots,k\}$$</div>
+            <h4>Camino Euleriano</h4>
+            <p>Un camino Euleriano recorre cada arista del grafo exactamente una vez. Un ciclo Euleriano es un camino Euleriano que comienza y termina en el mismo vértice.</p>
+            <div class="formula-block">$$\text{Existe ciclo Euleriano} \iff \forall\, v \in V: d(v) \text{ es par}$$</div>
+            <p class="theory-example"><strong>Ejemplo:</strong> El famoso problema de los puentes de Königsberg se resolvió mostrando que el grafo correspondiente no tiene todos los grados pares, por lo que no existe camino Euleriano.</p>
           </article>
           <article class="theory-item">
-            <h4>Numero cromatico</h4>
-            <p>Es la menor cantidad de colores necesarios para lograr una coloracion propia. Se representa con $\chi(G)$.</p>
-            <div class="formula-block">$$\chi(G)=\min\{k: G \text{ es } k\text{-coloreable}\}$$</div>
-          </article>
-          <article class="theory-item">
-            <h4>Coloracion voraz</h4>
-            <p>Recorre los vertices y asigna siempre el primer color disponible. No siempre alcanza el numero cromatico, pero es una forma practica de visualizar el proceso.</p>
+            <h4>Ciclo Hamiltoniano</h4>
+            <p>Un ciclo Hamiltoniano pasa por todos los vértices exactamente una vez y regresa al inicio. Encontrar uno es un problema NP-completo, lo que significa que no se conoce un algoritmo eficiente para todos los casos.</p>
+            <div class="formula-block">$$C=(v_0, v_1, \dots, v_{n-1}, v_0), \quad v_i \neq v_j \text{ para } i \neq j$$</div>
           </article>
         </div>
       </details>
+
+      <!-- ===== COLOREO ===== -->
+      <details class="theory-section">
+        <summary>Coloreo</summary>
+        <div class="theory-section-body">
+          <article class="theory-item">
+            <h4>Coloreo propio</h4>
+            <p>Asignamos colores a los vértices de forma que dos vértices adyacentes nunca compartan color.</p>
+            <div class="formula-block">$$c:V\to\{1,2,\dots,k\}$$</div>
+          </article>
+          <article class="theory-item">
+            <h4>Número cromático</h4>
+            <p>Es la menor cantidad de colores necesarios para lograr un coloreo propio. Se representa con $\chi(G)$.</p>
+            <div class="formula-block">$$\chi(G)=\min\{k: G \text{ es } k\text{-coloreable}\}$$</div>
+            <p class="theory-example"><strong>Ejemplos:</strong> $\chi(\text{árbol})=2$ (salvo $K_1$), $\chi(K_n)=n$, $\chi(\text{ciclo par})=2$, $\chi(\text{ciclo impar})=3$.</p>
+          </article>
+          <article class="theory-item">
+            <h4>Coloreo voraz (greedy)</h4>
+            <p>Recorre los vértices en algún orden y a cada uno le asigna el menor color disponible (el que no usan sus vecinos ya coloreados). No siempre alcanza el número cromático, pero da una cota superior:</p>
+            <div class="formula-block">$$\chi(G) \leq \Delta(G) + 1$$</div>
+            <p>donde $\Delta(G)$ es el grado máximo del grafo. Con un ordenamiento por grados decrecientes, el resultado suele ser mejor.</p>
+          </article>
+        </div>
+      </details>
+
     </div>
   </div>
 </section>
