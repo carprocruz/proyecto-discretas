@@ -106,6 +106,17 @@ const UI = (() => {
       LabCanvas.clearStartNode();
       LabCanvas.afterGraphChange();
     });
+    document.getElementById('btnGenComplete').addEventListener('click', () => {
+      GraphGenerators.makeComplete(5); 
+    });
+
+    document.getElementById('btnGenBipartite').addEventListener('click', () => {
+      GraphGenerators.makeBipartite(3, 4); 
+    });
+
+    document.getElementById('btnGenPlanar').addEventListener('click', () => {
+      GraphGenerators.makePlanar(7); 
+    });
 
     document.getElementById('randomGraphBtn').addEventListener('click', () => {
       Graph.clear();

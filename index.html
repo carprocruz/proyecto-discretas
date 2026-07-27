@@ -377,14 +377,22 @@ window.MathJax = {
             <button class="btn small" data-mode="connect">🔗 Conectar</button>
             <button class="btn small" data-mode="delete">🗑️ Borrar</button>
           </div>
+          
+          <div class="grp">
+            <button class="btn small" id="btnGenComplete">🌟 Completo</button>
+            <button class="btn small" id="btnGenBipartite">🔀 Bipartito</button>
+            <button class="btn small" id="btnGenPlanar">🎡 Planar</button>
+          </div>
+          
           <div class="grp">
             <label class="switch"><input type="checkbox" id="directedToggle"> dirigido</label>
             <button class="btn small" id="randomGraphBtn">🎲 Aleatorio</button>
             <button class="btn small danger" id="clearGraphBtn">🧹 Limpiar</button>
           </div>
         </div>
+        
         <div class="hint" id="editHint">Modo Mover: arrastra un vertice para reubicarlo. Cambia de modo arriba para añadir vertices, conectar o borrar.</div>
-
+        
         <div id="algoToolbar" style="display:none;">
           <div class="algo-controls">
             <button class="btn small active" data-algo="bfs">📡 BFS</button>
@@ -466,6 +474,7 @@ window.MathJax = {
 
 <script src="js/graph.js"></script>
 <script src="js/algorithms.js"></script>
+<script src="js/genGrafo.js"></script>
 <script src="js/heroCanvas.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/labCanvas.js"></script>
