@@ -14,7 +14,7 @@ Aplicación web educativa e interactiva para aprender teoría de grafos. Incluye
 - npm, incluido con Node.js.
 - Un navegador moderno con soporte para JavaScript y Canvas.
 
-No se requieren bases de datos, cuentas ni variables de entorno. El proyecto no incluye contraseñas, llaves, credenciales ni datos personales.
+No se requieren bases de datos, cuentas ni variables de entorno.
 
 ## Instalación
 
@@ -26,11 +26,22 @@ npm install
 
 ## Ejecución
 
-Para iniciar el servidor de desarrollo:
+### Linux
+
+Desde una terminal, ubicate en la carpeta raiz del repositorio, instala las dependencias e inicia el servidor de desarrollo:
 
 ```bash
 npm run dev
 ```
+
+### Windows con Visual Studio Code
+
+Tambien puedes ejecutar la aplicacion usando Visual Studio Code y la extension **Live Server**:
+
+1. Abre la carpeta del proyecto en Visual Studio Code.
+2. Instala la extension **Live Server** de Ritwick Dey si aun no la tienes.
+3. Haz clic derecho sobre `index.html` y selecciona **Open with Live Server**.
+4. Se abrira la aplicacion en el navegador mediante una direccion local, normalmente `http://127.0.0.1:5500/`.
 
 Luego abre la dirección que indique Vite, normalmente `http://localhost:5173/`.
 
@@ -108,6 +119,10 @@ npm run build
 - [`docs/arquitectura.md`](docs/arquitectura.md): organización técnica.
 - [`docs/manual-usuario.md`](docs/manual-usuario.md): guía breve de uso.
 - [`docs/verificacion.md`](docs/verificacion.md): casos de verificación manual y técnica.
+
+## Uso de inteligencia artificial
+
+Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia artificial como apoyo. La creaciÃ³n y el mejoramiento de las interfaces tienen una alta incidencia de la IA, al igual que la identificaciÃ³n y soluciÃ³n de errores en el cÃ³digo. Las decisiones finales, la integraciÃ³n de los componentes y la verificaciÃ³n del funcionamiento fueron realizadas por el equipo.
 
 ## Estado actual
 
