@@ -1,6 +1,4 @@
-/* ============================================================
-   SCRIPT — punto de entrada, inicializa todos los módulos
-   ============================================================ */
+/* punto de entrada, inicializa todos los módulos*/
 
 function typesetMath(scope) {
   const mathjax = window.MathJax;

@@ -1,6 +1,4 @@
-/* ============================================================
-   HERO CANVAS — grafo aleatorio ambiental en el hero
-   ============================================================ */
+/*HERO CANVAS — grafo aleatorio ambiental en el hero*/
 const HeroCanvas = (() => {
   const NODE_MARGIN = 40;
   const NODE_RADIUS = 9;

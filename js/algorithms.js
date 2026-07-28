@@ -1,6 +1,4 @@
-/* ============================================================
-   ALGORITHMS — BFS, DFS, componentes conexas, coloreo voraz
-   ============================================================ */
+/* funciones que pintan los algoritmos*/
 const Algorithms = (() => {
   function bfs(start) {
     const visited = new Set([start]);

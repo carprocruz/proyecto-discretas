@@ -1,6 +1,4 @@
-/* ============================================================
-   LAB CANVAS — renderizado, interacción y animación del lab
-   ============================================================ */
+/* renderizado, interacción y animación del lab */
 const LabCanvas = (() => {
   const NODE_RADIUS = 20;
   const HOVER_RING_RADIUS = 4;

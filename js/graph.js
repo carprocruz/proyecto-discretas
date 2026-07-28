@@ -1,6 +1,5 @@
-/* ============================================================
-   GRAPH — estado del grafo y operaciones sobre él
-   ============================================================ */
+/* funciones para dibujar los grafos*/
+
 const Graph = (() => {
   const state = { directed: false, nodes: [], edges: [] };
   const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

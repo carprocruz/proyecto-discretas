@@ -1,6 +1,4 @@
-/* ============================================================
-   UI — paneles de datos, tabs, toolbar del laboratorio
-   ============================================================ */
+/*UI — paneles de datos, tabs, toolbar del laboratorio*/
 const UI = (() => {
   let currentAlgo = 'bfs';
 

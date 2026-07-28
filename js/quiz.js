@@ -1,6 +1,4 @@
-/* ============================================================
-   QUIZ — cuestionario aleatorio y retos interactivos
-   ============================================================ */
+/*cuestionario aleatorio y retos interactivos*/
 const Quiz = (() => {
   const QUESTION_BANK = [
     { q: '¿Cuál es el número mínimo de aristas de un árbol con 7 vértices?', opts: ['5', '6', '7', '14'], correct: 1, ex: 'Un árbol siempre tiene exactamente n − 1 aristas: 7 − 1 = 6.' },
