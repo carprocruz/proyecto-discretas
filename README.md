@@ -26,6 +26,12 @@ npm install
 
 ## Ejecución
 
+### Visualizacion en linea
+
+La pagina tambien puede visualizarse directamente desde GitHub Pages en el siguiente enlace:
+
+[https://carprocruz.github.io/proyecto-discretas/](https://carprocruz.github.io/proyecto-discretas/)
+
 ### Linux
 
 Desde una terminal, ubicate en la carpeta raiz del repositorio, instala las dependencias e inicia el servidor de desarrollo:
